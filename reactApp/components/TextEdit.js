@@ -21,7 +21,7 @@ let TextEdit = ({editorState, onChange}) => {
   // TODO: this.onChange has to be something different w/ redux
   return (
       <div>
-        <Editor editorState={editorState} onChange={(editorState) => this.setState({editorState})} />
+        <Editor editorState={editorState} onChange={onChange} />
       </div>
   );
 };
