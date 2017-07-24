@@ -1,9 +1,9 @@
 import React from 'react';
-import Editor from './Editor.js';
+import EditorContainer from '../containers/EditorContainer.js';
 
 const App = () => {
   return (
-      <Editor />
+      <EditorContainer />
   );
 };
 
