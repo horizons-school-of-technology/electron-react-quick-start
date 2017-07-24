@@ -3,14 +3,14 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {onBoldClick} from '../actions/actions.js'; // import relevant actions
+import {onBoldClick, onItalicClick, onStrikeClick} from '../actions/actions.js'; // import relevant actions
 
-let Toolbar = ({onBoldClick}) => {
+let Toolbar = ({onBoldClick, onItalicClick, onStrikeClick}) => {
     return (
       <div style={divStyle()}>
         <button style={btn()} onClick={() => onBoldClick()} >Bold</button>
-        <button style={btn()} onClick={() => {}}>Italic</button>
-        <button style={btn()} onClick={() => {}}>Strikethrough</button>
+        <button style={btn()} onClick={() => onItalicClick()}>Italic</button>
+        <button style={btn()} onClick={() => onStrikeClick()}>Strikethrough</button>
       </div>
     );
 };
@@ -26,8 +26,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-      onBoldClick: () => dispatch(onBoldClick())
-      // any outgoing actions go here
+      onBoldClick: () => dispatch(onBoldClick()),
+      onItalicClick: () => dispatch(onItalicClick()),
+      onStrikeClick: () => dispatch(onStrikeClick())
     };
 };
 
