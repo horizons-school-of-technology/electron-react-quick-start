@@ -16,4 +16,4 @@ class App extends React.Component {
     }
 }
 
-export default Editor;
+export default App;

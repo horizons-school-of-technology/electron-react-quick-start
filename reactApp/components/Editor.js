@@ -1,4 +1,5 @@
 import React from 'react';
+import TextEdit from './TextEdit.js';
 
 class Editor extends React.Component {
     constructor(props) {
@@ -11,7 +12,7 @@ class Editor extends React.Component {
     render() {
       return (
         <div>
-          In Editor
+          <TextEdit />
         </div>
       );
     }
