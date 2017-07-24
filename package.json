@@ -36,6 +36,8 @@
     "draft-js": "^0.10.1",
     "express": "^4.15.3",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.5",
+    "redux": "^3.7.2"
   }
 }
