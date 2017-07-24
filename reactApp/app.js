@@ -1,6 +1,10 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+import Login from './components/Login';
+import Register from './components/Register';
+import TextEditor from './components/TextEditor';
+
 /* This can check if your electron app can communicate with your backend */
 // fetch('http://localhost:3000')
 // .then(resp => resp.text())
@@ -8,5 +12,4 @@ var ReactDOM = require('react-dom');
 // .catch(err => {throw err})
 
 
-ReactDOM.render(<p>React Lives!!!!</p>,
-   document.getElementById('root'));
+ReactDOM.render(<Register />, document.getElementById('root'));
