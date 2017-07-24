@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import MyEditor from './components/draft';
+import MyEditor from './components/MyEditor';
+import MyInput from './components/MyInput';
 
 /* This can check if your electron app can communicate with your backend */
 // fetch('http://localhost:3000')
@@ -12,5 +13,7 @@ ReactDOM.render(
   <div>
     <p>I live in App.js</p>
     <MyEditor />
-  </div>
-  , document.getElementById('root'));
+    <MyInput />
+  </div>,
+  document.getElementById('root')
+);
