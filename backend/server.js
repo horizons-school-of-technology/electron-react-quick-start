@@ -3,9 +3,22 @@ const app = express();
 const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const path = require('path');
+// const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const flash = require('connect-flash');
+const models = require('./models/models');
+const User = models.User;
 
-var models = require('./models/models');
-var User = models.User;
+// app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash());
 
 mongoose.connection.on('connected', () => {
   console.log('Successfully connected to MongoDB! =)');
@@ -14,7 +27,7 @@ mongoose.connection.on('connected', () => {
 mongoose.connect(process.env.MONGODB_URI);                // Connect to our DB!
 
 // BEGIN PASSPORT HERE -------------------------------------------------
-var session = require('express-session');
+const session = require('express-session');
 app.use(session({
   secret: 'keyboard cat'
 }));
@@ -58,21 +71,22 @@ passport.use(new LocalStrategy(function(username, password, done) {
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', auth(passport));
-app.use('/', routes);
-
 // END PASSPORT HERE --------------------------------------------------------
 
-app.get('/', (req, res) => {
+app.get('/login', (req, res) => {
   res.send('Hello World!');
 });
 
-app.post('/login', (req, res) => {
-
-});
+app.post('/login',
+  passport.authenticate('local', {
+    successRedirect: '/users' , // TODO change the redirect link
+    failureRedirect: '/login',
+    failureFlash: "dumbass, your login shit is wrong",
+    successFlash: "Welcome Bitch"
+  }));
 
 app.post('/register', (req, res) => {
-
+  res.semd("hello its working");
 });
 
 // Error handler/Catch 404 ---------------------------------------------------

@@ -8,5 +8,5 @@ var ReactDOM = require('react-dom');
 // .catch(err => {throw err})
 
 
-ReactDOM.render(<p>React Lives</p>,
+ReactDOM.render(<p>React Lives!!!!</p>,
    document.getElementById('root'));
