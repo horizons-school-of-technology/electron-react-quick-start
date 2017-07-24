@@ -1,4 +1,4 @@
-const changeReducer = (state = {editorState: EditorState.createEmpty()}, action) => {
+const changeReducer = (state = EditorState.createEmpty(), action) => {
   switch (action.type) {
     case 'CHANGED':
       return action.newEditorState;
