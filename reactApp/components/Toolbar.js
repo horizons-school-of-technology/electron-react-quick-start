@@ -1,6 +1,7 @@
 import React from 'react';
 // import {Editor, EditorState, RichUtils} from 'draft-js';
 
+
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {onBoldClick} from '../actions/actions.js'; // import relevant actions
@@ -8,6 +9,17 @@ import {onBoldClick} from '../actions/actions.js'; // import relevant actions
 let Toolbar = ({onBoldClick}) => {
     return (
       <div style={divStyle()}>
+        {/* <div className="RichEditor-controls">
+          {INLINE_STYLES.map(type =>
+            <button
+              // key={type.label}
+              // active={currentStyle.has(type.style)}
+              // label={type.label}
+              // onToggle={props.onToggle}
+              style={type.style}
+            />
+          )}
+        </div> */}
         <button style={btn()} onClick={() => onBoldClick()} >Bold</button>
         <button style={btn()} onClick={() => {}}>Italic</button>
         <button style={btn()} onClick={() => {}}>Strikethrough</button>
@@ -39,6 +51,13 @@ Toolbar = connect(
 
 
 
+
+// const InlineStyleControls = (props) => {
+//   var currentStyle = props.editorState.getCurrentInlineStyle();
+//   return (
+//
+//   );
+// };
 
 const divStyle = () => ({
   'border': '2px solid black',
