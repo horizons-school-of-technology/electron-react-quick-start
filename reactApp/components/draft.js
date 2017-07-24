@@ -1,0 +1,22 @@
+import React from 'react';
+import {Editor, EditorState} from 'draft-js';
+
+//==================== Draft.js ==========================
+
+class MyEditor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {editorState: EditorState.createEmpty()};
+    this.onChange = (editorState) => this.setState({editorState});
+  }
+  render() {
+    return (
+      <div>
+        <p>I live in draft.js</p>
+        <Editor editorState={this.state.editorState} onChange={this.onChange} />
+      </div>
+    );
+  }
+}
+
+export default MyEditor;
