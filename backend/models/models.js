@@ -24,7 +24,7 @@ var User = mongoose.model('User', {
   },
   docs: {
     type: Schema.ObjectId,
-    ref: 'Docs',
+    ref: 'Doc',
   }
 });
 
