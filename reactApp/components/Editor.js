@@ -9,9 +9,11 @@ class Editor extends React.Component {
     }
 
     render() {
-      return {
-
-      };
+      return (
+        <div>
+          In Editor
+        </div>
+      );
     }
 }
 
