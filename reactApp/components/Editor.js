@@ -3,13 +3,6 @@ import TextEdit from './TextEdit.js';
 import Toolbar from './Toolbar.js';
 
 class Editor extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-
-    };
-  }
-
   render() {
     return (
       <div>

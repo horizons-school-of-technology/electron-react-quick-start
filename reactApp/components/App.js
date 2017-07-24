@@ -1,19 +1,10 @@
 import React from 'react';
-import Editor from './Editor.js';
+import EditorContainer from '../containers/EditorContainer.js';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-
-    };
-  }
-
-  render() {
-    return (
-      <Editor />
-    );
-  }
-}
+const App = () => {
+  return (
+      <EditorContainer />
+  );
+};
 
 export default App;
