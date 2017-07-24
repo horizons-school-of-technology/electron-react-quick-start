@@ -1,6 +1,7 @@
 import React from 'react';
 import {Editor, EditorState, RichUtils, convertToRaw} from 'draft-js';
 import styles from '../styles/styles';
+import '../styles/container.scss';
 
 const styleMap ={
   'STRIKETHROUGH': styles.strikethrough,
@@ -75,11 +76,13 @@ class TextEditor extends React.Component {
             </button>
           </div>
         </div>
+        <div id="container">
             <Editor
               style={styles.editor}
               editorState={this.state.editorState} onChange={this.onChange}
               customStyleMap={styleMap}
             />
+        </div>
           {/* just for debugging purposes */}
           {JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()))}
 
