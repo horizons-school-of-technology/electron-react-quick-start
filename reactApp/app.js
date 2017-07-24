@@ -11,5 +11,5 @@ import TextEditor from './components/TextEditor';
 // .then(text => console.log(text))
 // .catch(err => {throw err})
 
-ReactDOM.render(<Register />,
-   document.getElementById('root'));
+
+ReactDOM.render(<Register />, document.getElementById('root'));
