@@ -1,24 +1,44 @@
 import React from 'react';
 // import {Editor, EditorState, RichUtils} from 'draft-js';
 
-class Toolbar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {onBoldClick} from '../actions/actions.js'; // import relevant actions
 
-    };
-  }
-
-  render() {
+let Toolbar = ({onBoldClick}) => {
     return (
       <div style={divStyle()}>
-        <button style={btn()} onClick={() => {}}>Bold</button>
+        <button style={btn()} onClick={() => onBoldClick()} >Bold</button>
         <button style={btn()} onClick={() => {}}>Italic</button>
         <button style={btn()} onClick={() => {}}>Strikethrough</button>
       </div>
     );
-  }
-}
+};
+
+Toolbar.propTypes = {
+  onBoldClick: PropTypes.func
+};
+
+const mapStateToProps = state => {
+  return {
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+      onBoldClick: () => dispatch(onBoldClick())
+      // any outgoing actions go here
+    };
+};
+
+Toolbar = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Toolbar);
+
+
+
+
 
 const divStyle = () => ({
   'border': '2px solid black',
