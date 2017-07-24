@@ -8,7 +8,7 @@ import editorReducer from './editorReducer';
 const rootReducer = combineReducers({
     // label reducers as the state name to the reducer name
     //todos: todoReducer
-    editorState: editorReducer,
+  editorState: editorReducer,
 });
 
 export default rootReducer;
