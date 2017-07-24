@@ -1,5 +1,5 @@
 import React from 'react';
-import Editor from './Editor.js';
+import EditorView from './EditorView.js';
 
 class App extends React.Component {
     constructor(props) {
@@ -11,7 +11,7 @@ class App extends React.Component {
 
     render() {
       return (
-          <Editor />
+          <EditorView />
       );
     }
 }

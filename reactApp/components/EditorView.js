@@ -1,7 +1,7 @@
 import React from 'react';
 import TextEdit from './TextEdit.js';
 
-class Editor extends React.Component {
+class EditorView extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -18,4 +18,4 @@ class Editor extends React.Component {
     }
 }
 
-export default Editor;
+export default EditorView;
