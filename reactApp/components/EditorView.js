@@ -7,6 +7,7 @@ import IconButton from 'material-ui/IconButton';
 import FlatButton from 'material-ui/FlatButton';
 import {Redirect} from 'react-router-dom';
 import Snackbar from 'material-ui/Snackbar';
+
 // TODO: import {Documents} from 'path to models'
 
 const styles = {
