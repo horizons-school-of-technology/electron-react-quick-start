@@ -1,7 +1,6 @@
 import React from 'react';
 import TextEdit from './TextEdit.js';
 import Toolbar from './Toolbar.js';
-import DocumentPortal from './DocumentPortal.js';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';

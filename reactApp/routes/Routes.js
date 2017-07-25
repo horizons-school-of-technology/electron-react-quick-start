@@ -5,13 +5,11 @@ import DocumentPortal from '../components/DocumentPortal';
 import EditorView from '../components/EditorView';
 
 const Routes = () => (
-  <main>
-
+  <div>
       <Route exact path='/' component={Test}/>
       <Route path='/documents' component={DocumentPortal}/>
       <Route path='/editor' component={EditorView}/>
-
-  </main>
+  </div>
 );
 
 export default Routes;
