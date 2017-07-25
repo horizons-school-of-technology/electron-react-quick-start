@@ -35,9 +35,9 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-      onChange: (newEditorState) => dispatch(onChangeAction(newEditorState))
-    };
+  return {
+    onChange: (newEditorState) => dispatch(onChangeAction(newEditorState))
+  };
 };
 
 TextEdit = connect(
