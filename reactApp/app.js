@@ -12,7 +12,5 @@ import DocumentsList from './components/DocumentsList';
 //   .then(text => console.log(text))
 //   .catch(err => {throw err;});
 
-ReactDOM.render(<Login />, document.getElementById('root'));
-
-ReactDOM.render(<DocumentsList />,
+ReactDOM.render(<DocumentsList userId="5976dbc9c3aa6f127785eda6"/>,
    document.getElementById('root'));
