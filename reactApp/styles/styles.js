@@ -28,6 +28,18 @@ const styles = {
     color: '#4f4f4f',
     marginLeft: '30px'
   },
+  h2: {
+    fontFamily: 'Alegreya',
+    fontSize: '20px',
+    color: '#4f4f4f',
+    marginLeft: '30px'
+  },
+  p: {
+    fontFamily: 'Lato',
+    fontSize: '15px',
+    color: '#4f4f4f',
+    marginLeft: '25px'
+  },
   toolbar: {
     marginLeft: '30px',
     display: 'flex',
@@ -248,6 +260,24 @@ const styles = {
     borderBottom: '1px solid #AD1457',
     boxShadow: 'inset 0 -2px #AD1457',
   },
+  buttonLong: {
+    position: 'relative',
+    margin: '5px',
+    verticalAlign: 'top',
+    width: '175px',
+    height: '30px',
+    borderRadius: '3px',
+    padding: '2px',
+    fontSize: '18px',
+    color: 'white',
+    marginRight: '40px',
+    textAlign: 'center',
+    textShadow: '0 1px 2px rgba(0, 0, 0, 0.25)',
+    background: '#D81B60',
+    border: '0',
+    borderBottom: '1px solid #AD1457',
+    boxShadow: 'inset 0 -2px #AD1457',
+  },
   buttonRevHist: {
     active: {
       top: '1px',
@@ -271,6 +301,43 @@ const styles = {
     borderBottom: '2px solid #7B1FA2',
     boxShadow: 'inset 0 -2px #7B1FA2',
   },
+  inputBox: {
+    fontFamily: 'Lato',
+    fontSize: '14px',
+    paddingLeft: '10px',
+    paddingRight: '10px',
+    height: '28px',
+    width: '200px',
+    border: 'solid',
+    borderWidth: '1px',
+    borderRadius: '2px',
+    borderColor: '#b2b2b2'
+  },
+  buttonLongY: {
+    position: 'relative',
+    margin: '5px',
+    verticalAlign: 'top',
+    width: '175px',
+    height: '30px',
+    borderRadius: '3px',
+    padding: '2px',
+    fontSize: '18px',
+    color: 'white',
+    marginRight: '40px',
+    textAlign: 'center',
+    textShadow: '0 1px 2px rgba(0, 0, 0, 0.25)',
+    background: '#FFCA28',
+    border: '0',
+    borderBottom: '1px solid #FFB300',
+    boxShadow: 'inset 0 -2px #FFB300',
+  },
+  hr: {
+    marginLeft: '20px',
+    marginRight: '20px',
+    borderColor: '#c6c6c6',
+    borderStyle: 'solid',
+    borderWidth: '1px'
+  }
 };
 
 export default styles;
