@@ -20,6 +20,7 @@ const loginReducer = (state = {'username': "", 'password': ""}, action) => {
 
     case 'PASSWORD':
         const newState3 = Object.assign(state);
+        console.log(newState3);
         newState3.password = action.password
     return newState3;
     default:

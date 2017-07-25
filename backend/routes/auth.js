@@ -11,6 +11,7 @@ module.exports = function(passport) {
   });
 
   router.post('/signup', function(req, res) {
+      console.log('bruh');
     // validation step
     if (req.body.password!==req.body.passwordRepeat) {
       return res.render('signup', {

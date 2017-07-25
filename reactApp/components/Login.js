@@ -10,11 +10,11 @@ let Login = ({username, updateUsername, password, updatePassword, onSubmit}) => 
         <h3>Login</h3>
         <div className="form-group">
           <label>Username</label>
-          <input type="text" name="username" className="form-control" onChange={(e) => updateUsername(e.target.value)}></input> {/*HEEERRREEEEEEd */}
+          <input type="text" name="username" className="form-control" onChange={(e) => updateUsername(e.target.value)}></input>
         </div>
         <div className="form-group">
           <label>Password</label>
-          <input type="password" name="password" className="form-control" onChange={(e) => updatePassword(e.target.value)}></input>
+          <input type="password" name="password" className="form-control" onChange={(e) => {updatePassword(e.target.value); console.log(password);}}></input>
         </div>
         <div className="form-group">
           <button className="btn btn-success" onSubmit={(username, password) => onSubmit(username, password)}>Login</button>
@@ -34,9 +34,10 @@ Login.propTypes = {
 };
 
 const mapStateToProps = state => {
+    console.log(state.loginState.password);
   return {
-    username: state.username,
-    password: state.password
+    username: state.loginState.username,
+    password: state.loginState.password
   };
 };
 

@@ -27,7 +27,7 @@ const loginReducer = (state = {'regUsername': "", 'regPassword': "", 'verPasswor
     case 'VERPASSWORD':
         let newState4 = Object.assign(state);
         newState4.verPassword = action.verPassword
-    return newState3;
+    return newState4;
 
     default:
       return state;

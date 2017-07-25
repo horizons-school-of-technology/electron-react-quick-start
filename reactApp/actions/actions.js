@@ -54,10 +54,12 @@ export function verPassword(password) {
   };
 }
 
-export function register(username, password) {
+export function register(username, password, verPassword) {
+    console.log("action");
   return {
     type: 'REGISTER',
     username,
-    password
+    password,
+    verPassword,
   };
 }
