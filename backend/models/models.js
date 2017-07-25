@@ -23,8 +23,8 @@ var User = mongoose.model('User', {
     required: true
   },
   docs: {
-    type: Schema.ObjectId,
-    ref: 'Doc',
+    type: Array,
+    default: [],
   }
 });
 
@@ -33,18 +33,24 @@ var User = mongoose.model('User', {
 * collaborators:   which users can access the document
 */
 var Doc = mongoose.model('Doc', {
+  author: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
   collaborators: {
     type: Schema.ObjectId,
     required: true,
     ref: 'User',
   },
-  // versions: {
-  //   // Add later
-  // },
+  versions: {
+    type: Array,
+    required: true,
+  },
 });
-
-
-
 
 // Export our models!
 module.exports = {

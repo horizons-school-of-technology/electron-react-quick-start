@@ -2,7 +2,7 @@ import React from 'react';
 import {Editor, EditorState} from 'draft-js';
 import styles from '../styles/styles';
 import '../styles/container.scss';
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const docsArr = ['onedoc', 'twodoc', 'threedoc', 'fourdoc', 'onedoc', 'twodoc', 'threedoc', 'fourdoc', 'onedoc', 'twodoc', 'threedoc', 'fourdoc', 'onedoc', 'twodoc', 'threedoc', 'fourdoc', 'onedoc', 'twodoc', 'threedoc', 'fourdoc', 'onedoc', 'twodoc', 'threedoc', 'fourdoc', 'onedoc', 'twodoc', 'threedoc', 'fourdoc', 'onedoc', 'twodoc', 'threedoc', 'fourdoc', 'onedoc', 'twodoc', 'threedoc', 'fourdoc', 'onedoc', 'twodoc', 'threedoc', 'fourdoc'];
 

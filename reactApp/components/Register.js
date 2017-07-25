@@ -31,8 +31,8 @@ class Register extends React.Component {
         confirmPassword: this.state.confirmPassword
       }
     })
-      .then((resp) => console.log("Login Response: ", resp))
-      .catch(err => console.log("Login Error Response: ", err));
+      .then((resp) => console.log("Register Response: ", resp))
+      .catch(err => console.log("Register Error Response: ", err));
   }
 
   render() {
