@@ -50,14 +50,15 @@ class DocumentsList extends React.Component {
     });
     this.setState({documents: Promise.all(docsObjPromiseArr)});
   }
+
   createDoc() {
     axios({
       method: 'post',
       url: 'http://localhost:3000/createDoc',
       data: {
         title: this.props.userId,
-        author: this.,
-        password:
+        author: 'todo',
+        password: 'rip'
       }
     })
     .then((resp) => {
@@ -86,28 +87,28 @@ class DocumentsList extends React.Component {
             <h1 style={styles.h2}>My Documents</h1>
             <hr style={styles.hr}></hr>
             {
-              this.state.documents.then((docs) => {
-                docs.map((doc) => {
-                  if (doc.isOwner) {
-                    // The <p> tags should have Links around them!
-                    return (<p style={styles.p}>{doc.title}</p>);
-                  }
-                });
-              })
+              // this.state.documents.then((docs) => {
+              //   docs.map((doc) => {
+              //     if (doc.isOwner) {
+              //       // The <p> tags should have Links around them!
+              //       return (<p style={styles.p}>{doc.title}</p>);
+              //     }
+              //   });
+              // })
             }
           </div>
           <div className="card2">
             <h1 style={styles.h2}>My Collaborations</h1>
             <hr style={styles.hr}></hr>
             {
-              this.state.documents.then((docs) => {
-                docs.map((doc) => {
-                  if (doc.isOwner) {
-                    // The <p> tags should have Links around them!
-                    return (<p style={styles.p}>{doc.title} by: <i>{doc.author}</i></p>);
-                  }
-                });
-              })
+              // this.state.documents.then((docs) => {
+              //   docs.map((doc) => {
+              //     if (doc.isOwner) {
+              //       // The <p> tags should have Links around them!
+              //       return (<p style={styles.p}>{doc.title} by: <i>{doc.author}</i></p>);
+              //     }
+              //   });
+              // })
             }
           </div>
         </div>
