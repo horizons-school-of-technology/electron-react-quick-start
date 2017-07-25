@@ -1,8 +1,6 @@
 import React from 'react';
-import {Link, Route} from 'react-router-dom';
 import TextEdit from './TextEdit.js';
 import Toolbar from './Toolbar.js';
-import DocumentPortal from './DocumentPortal.js';
 
 // TODO: import {Documents} from 'path to models'
 
