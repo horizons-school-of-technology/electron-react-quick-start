@@ -1,7 +1,7 @@
 import React from 'react';
-import {Editor, EditorState, RichUtils, convertToRaw, DefaultDraftBlockRenderMap} from 'draft-js';
-import styles from '../styles/styles';
+import {Editor, EditorState, RichUtils, DefaultDraftBlockRenderMap} from 'draft-js';
 import { Map } from 'immutable';
+import styles from '../styles/styles';
 import '../styles/container.scss';
 import '../styles/blockstyles.scss';
 
@@ -10,7 +10,6 @@ const styleMap ={
   'FONT_RED': styles.fontRed,
   'FONT_BLUE': styles.fontBlue,
   'FONT_GRAY': styles.fontGray,
-
 };
 
 const blockRenderMap = Map({

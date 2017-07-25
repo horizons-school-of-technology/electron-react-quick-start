@@ -4,6 +4,7 @@ var ReactDOM = require('react-dom');
 import Login from './components/Login';
 import Register from './components/Register';
 import TextEditor from './components/TextEditor';
+import DocumentsList from './components/DocumentsList';
 
 /* This can check if your electron app can communicate with your backend */
 // fetch('http://localhost:3000')
@@ -11,5 +12,5 @@ import TextEditor from './components/TextEditor';
 // .then(text => console.log(text))
 // .catch(err => {throw err})
 
-ReactDOM.render(<TextEditor />,
+ReactDOM.render(<DocumentsList />,
    document.getElementById('root'));
