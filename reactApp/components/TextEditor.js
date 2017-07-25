@@ -1,9 +1,11 @@
 import React from 'react';
 import {Editor, EditorState, RichUtils, DefaultDraftBlockRenderMap} from 'draft-js';
+
 import { Map } from 'immutable';
 import styles from '../styles/styles';
 import '../styles/container.scss';
 import '../styles/blockstyles.scss';
+import io from 'socket.io-client'
 
 const styleMap ={
   'STRIKETHROUGH': styles.strikethrough,
@@ -52,6 +54,7 @@ class TextEditor extends React.Component {
     if (type === 'header-three') {
       return 'h3';
     }
+    return 'none';
   }
   makeBold() {
     this.onChange(RichUtils.toggleInlineStyle(
@@ -223,6 +226,7 @@ class TextEditor extends React.Component {
                 customStyleMap={styleMap} blockStyleFn={this.blockStyleFn}
                 blockRenderMap={extendedBlockRenderMap}
               />
+          <script type="text/javascript"> var socket = io('localhost: 3000') socket.emit('newEvent')</script>
           </div>
         </div>
       </div>

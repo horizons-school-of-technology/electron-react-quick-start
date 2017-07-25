@@ -55,7 +55,9 @@ class DocumentsList extends React.Component {
       method: 'post',
       url: 'http://localhost:3000/createDoc',
       data: {
-        userId: this.props.userId,
+        title: this.props.userId,
+        author: this.,
+        password:
       }
     })
     .then((resp) => {
