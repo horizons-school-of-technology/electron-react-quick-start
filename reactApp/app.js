@@ -12,5 +12,5 @@ import Login from './components/Login';
 //   .then(text => console.log(text))
 //   .catch(err => {throw err;});
 
-
 ReactDOM.render(<Login />, document.getElementById('root'));
+
