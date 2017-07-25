@@ -21,9 +21,19 @@ let TextEdit = ({editorState, onChange}) => {
   // TODO: this.onChange has to be something different w/ redux
   return (
       <div>
-        <Editor editorState={editorState} onChange={onChange} />
+        <Editor
+          editorState={editorState}
+          onChange={onChange}
+          customStyleMap={styleMap}
+        />
       </div>
   );
+};
+
+const styleMap = {
+  'STRIKETHROUGH': {
+    textDecoration: 'line-through',
+  },
 };
 
 TextEdit.propTypes = {
