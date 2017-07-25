@@ -1,5 +1,5 @@
 import React from 'react';
-import {Editor, EditorState, RichUtils, convertToRaw, DefaultDraftBlockRenderMap} from 'draft-js';
+import {Editor, EditorState, RichUtils, /*convertToRaw,*/ DefaultDraftBlockRenderMap} from 'draft-js';
 import styles from '../styles/styles';
 import { Map } from 'immutable';
 import '../styles/container.scss';
@@ -54,6 +54,7 @@ class TextEditor extends React.Component {
     if (type === 'header-three') {
       return 'h3';
     }
+    return 'none';
   }
   makeBold() {
     this.onChange(RichUtils.toggleInlineStyle(
