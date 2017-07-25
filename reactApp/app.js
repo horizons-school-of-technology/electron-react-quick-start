@@ -7,7 +7,7 @@ import rootReducer from './reducers/index';
 const store = createStore(rootReducer);
 require('../css/main.css');
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import injectTapEventPlugin from 'react'
+import {BrowserRouter, Route} from 'react-router-dom';
 
 /* This can check if your electron app can communicate with your backend */
 // fetch('http://localhost:3000')
@@ -17,7 +17,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 ReactDOM.render(
      <Provider store={store}>
       <MuiThemeProvider>
-        <App />
+        <BrowserRouter>
+          <Route path="/" component={App}/>
+        </BrowserRouter>
       </MuiThemeProvider>
      </Provider>,
      document.getElementById('root')

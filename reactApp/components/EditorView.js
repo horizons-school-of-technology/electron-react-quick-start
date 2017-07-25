@@ -6,6 +6,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import FlatButton from 'material-ui/FlatButton';
+import {Route} from 'react-router-dom';
 
 // TODO: import {Documents} from 'path to models'
 
@@ -18,13 +19,17 @@ const styles = {
 class EditorView extends React.Component {
   onSave() {
     // TODO: if document exists, update. Else, create and save
-
+    alert('will save changes');
   }
 
   onBack() {
     // TODO: if document is not saved, notify user that changes could
     // be lost. Prompt for save in this modal as well. Continue button in
     // modal too
+    alert('will redirect to documents view');
+
+    // <Route path='/documents' component={DocumentPortal}/>
+
   }
 
   render() {
