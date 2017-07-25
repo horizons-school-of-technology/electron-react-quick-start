@@ -4,6 +4,7 @@ import styles from '../styles/styles';
 import { Map } from 'immutable';
 import '../styles/container.scss';
 import '../styles/blockstyles.scss';
+import io from 'socket.io-client'
 
 const styleMap ={
   'STRIKETHROUGH': styles.strikethrough,
@@ -224,6 +225,7 @@ class TextEditor extends React.Component {
                 customStyleMap={styleMap} blockStyleFn={this.blockStyleFn}
                 blockRenderMap={extendedBlockRenderMap}
               />
+          <script type="text/javascript"> var socket = io('localhost: 3000') socket.emit('newEvent')</script>
           </div>
         </div>
       </div>
