@@ -106,7 +106,7 @@ app.post('/createDoc', (req, res) => {
     }
     User.findById(req.body.userId)
     .then((user) => {
-      user.docs.push(doc._id);
+      user.docs.push({id: doc._id, isOwner: true});
     });
   });
 });
