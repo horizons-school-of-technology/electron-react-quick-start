@@ -5,16 +5,49 @@ import Toolbar from './Toolbar.js';
 class EditorView extends React.Component {
   render() {
     return (
-      <div>
-        <button onClick={() => {}}>Back to Documents Portal</button>
-        <h1> This is the document name </h1>
-        <p> Sharable Document ID: 69696969 </p>
-        <button onClick={() => {}}>Save Changes</button>
+      <div style={outsideStyle()}>
+        <div style={centered()}>
+          <h1> This is the document name </h1>
+          <p> Sharable Document ID: 69696969 </p><br></br>
+        </div>
+        <div style={centeredBtn()}>
+          <button onClick={() => {}}>Back to Documents Portal</button>
+          <button onClick={() => {}}>Save Changes</button><br></br>
+        </div>
         <Toolbar />
-        <TextEdit />
+        <div style={textStyle()}><TextEdit/></div>
       </div>
     );
   }
 }
+
+const centeredBtn = () => ({
+  'display': 'flex',
+  'margin': '20px',
+    'alignItems': 'center',
+  'justifyContent': 'center',
+});
+
+const centered = () => ({
+  'display': 'flex',
+  'flex-direction': 'column',
+  'margin': '20px',
+  'alignItems': 'center',
+  'justifyContent': 'center',
+
+});
+
+const textStyle = () => ({
+  'border': '4px solid black',
+  'margin': '20px',
+  'height': '300px',
+  'background': 'white'
+});
+
+const outsideStyle = () => ({
+  // 'background': '#eef6f6',
+  'height': '100%',
+  'background': '#ededed'
+});
 
 export default EditorView;
