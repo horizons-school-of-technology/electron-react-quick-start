@@ -33,6 +33,11 @@ var User = mongoose.model('User', {
 * collaborators:   which users can access the document
 */
 var Doc = mongoose.model('Doc', {
+
+  title: {
+    type: String,
+    required: true
+  },
   author: {
     type: String,
     required: true

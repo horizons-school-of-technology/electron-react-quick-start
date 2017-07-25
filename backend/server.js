@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const User = require('./models/models').User;
+const Doc = require('./models/models').Doc;
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
@@ -87,6 +88,43 @@ app.get('/user', (req, res) => {
 // Login Failed!
 app.get('/failureLogin', (req, res) => {
   res.send({success: false});
+});
+
+app.post('/docs', (req, res) => {
+  var userId = req.body.userId;
+  User.findById(userId)
+  .then((user) => {
+    res.json({user: user});
+  })
+  .catch((err) => {
+    res.json({failure: err});
+  });
+});
+
+app.post('/createDoc', (req, res) => {
+  var newDoc = new Doc({
+    title: req.body.title,
+    author: req.body.userId,
+    password: req.body.password
+  });
+  newDoc.save((err, doc) => {
+    if (err) {
+      res.json({failure: err});
+    }
+    User.findById(req.body.userId)
+    .then((user) => {
+      user.docs.push(doc._id);
+    });
+  });
+});
+
+
+app.post('/editor', (req, res) => {
+  var docId = req.body.docId;
+  Document.findOne({id: docId})
+  .then((doc) => {
+    res.json({doc: doc});
+  });
 });
 
 // Error handler/Catch 404 ---------------------------------------------------
