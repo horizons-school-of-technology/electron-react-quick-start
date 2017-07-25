@@ -1,12 +1,24 @@
+export function onChangeAction(newEditorState) {
+  return {
+    type: 'CHANGED',
+    newEditorState
+  };
+}
+
 export function onBoldClick() {
   return {
     type: 'BOLD'
   };
 }
 
-export function onChangeAction(newEditorState) {
+export function onItalicClick() {
   return {
-    type: 'CHANGED',
-    newEditorState
+    type: 'ITALIC'
+  };
+}
+
+export function onStrikeClick() {
+  return {
+    type: 'STRIKETHROUGH'
   };
 }
