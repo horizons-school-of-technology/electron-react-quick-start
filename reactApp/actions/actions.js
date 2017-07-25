@@ -10,3 +10,54 @@ export function onChangeAction(newEditorState) {
     newEditorState
   };
 }
+
+export function login(username, password) {
+  return {
+    type: 'LOGIN',
+    username,
+    password
+  };
+}
+
+export function saveUsername(username) {
+  return {
+    type: 'USERNAME',
+    username
+  };
+}
+
+export function savePassword(password) {
+  return {
+    type: 'PASSWORD',
+    password
+  };
+}
+
+export function regUsername(username) {
+  return {
+    type: 'REGUSERNAME',
+    username
+  };
+}
+
+export function regPassword(password) {
+  return {
+    type: 'REGPASSWORD',
+    password
+  };
+}
+
+export function verPassword(password) {
+  return {
+    type: 'VERPASSWORD',
+    password
+  };
+}
+
+export function register(username, password) {
+  return {
+    type: 'REGISTER',
+    username,
+    password
+  };
+}
