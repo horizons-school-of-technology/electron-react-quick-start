@@ -60,14 +60,15 @@ app.get('/', (req, res) => {
 
 app.post('/login',
   passport.authenticate('local', {
-    successRedirect: '/users' , // TODO change the redirect link
-    failureRedirect: '/login',
+    successRedirect: '/user' , // TODO change the redirect link
+    failureRedirect: '/failureLogin',
     failureFlash: "Incorrect Login Credentials",
     successFlash: "Login Successful!"
   })
 );
 
 app.post('/register', (req, res) => {
+  console.log("Hey!");
   var username = req.body.username;
   var password = req.body.password;
   var confirmPassword = req.body.confirmPassword;
@@ -79,8 +80,14 @@ app.post('/register', (req, res) => {
   res.end();
 });
 
+// Login Success!
 app.get('/user', (req, res) => {
-  res.send('User route!');
+  res.send({success: true});
+});
+
+// Login Failed!
+app.get('/failureLogin', (req, res) => {
+  res.send({success: false});
 });
 
 app.post('/docs', (req, res) => {

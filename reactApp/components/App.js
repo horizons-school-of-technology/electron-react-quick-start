@@ -3,7 +3,8 @@ import {  Route } from 'react-router-dom';
 
 import Login from './Login';
 import Register from './Register';
-//import TextEditor from './TextEditor';
+import TextEditor from './TextEditor';
+import DocumentsList from './DocumentsList';
 //import Portal from './Portal'
 
 class App extends React.Component {
@@ -27,6 +28,19 @@ class App extends React.Component {
               path="/register"
               component={Register}
             />
+
+            <Route
+              exact={true}
+              path="/docList"
+              component={DocumentsList}
+            />
+
+            <Route
+              exact={true}
+              path="/textEditor"
+              component={TextEditor}
+            />
+
         </div>
     );
   }

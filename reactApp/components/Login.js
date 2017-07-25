@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
 
 /**
  * This component allows the user to attempt to login to our app,
@@ -13,6 +14,7 @@ class Login extends React.Component {
     this.state = {
       username: '',
       password: '',
+      willRedirect: false,
     };
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -37,14 +39,30 @@ class Login extends React.Component {
       url: 'http://localhost:3000/login',
       data: {
         username: this.state.username,
-        lastName: this.state.password,
+        password: this.state.password,
       }
     })
-      .then((resp) => {console.log("Login Response: ", resp);})
+      .then((resp) => {
+        if(resp.data.success) {
+          this.setState({
+            willRedirect: true
+          });
+        }
+        console.log("Login Response: ", resp);
+      })
       .catch(err => console.log("Login Error Response: ", err));
   }
 
   render() {
+    if(this.state.willRedirect) {
+      this.setState({
+        willRedirect: false,
+      });
+      return (
+        <Redirect to='/docList' />
+      );
+    }
+
     return(
       <div>
         <form onSubmit={this.makeLoginRequest}>
