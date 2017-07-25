@@ -6,6 +6,8 @@ import { Provider } from 'react-redux';
 import rootReducer from './reducers/index';
 const store = createStore(rootReducer);
 require('../css/main.css');
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+// import injectTapEventPlugin from 'react'
 
 /* This can check if your electron app can communicate with your backend */
 // fetch('http://localhost:3000')
