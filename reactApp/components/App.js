@@ -1,12 +1,13 @@
 import React from 'react';
 
-import Routes from '../routes/Routes';
+// import Routes from '../routes/Routes';
 // import Test from './Test';
+import DocumentPortal from './DocumentPortal';
 
 const App = () => {
   return (
     <div>
-      <Routes />
+      <DocumentPortal />
     </div>
   );
 };
