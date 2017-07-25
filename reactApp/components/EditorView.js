@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link, Route} from 'react-router-dom';
 import TextEdit from './TextEdit.js';
 import Toolbar from './Toolbar.js';
 import DocumentPortal from './DocumentPortal.js';
@@ -7,7 +6,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import FlatButton from 'material-ui/FlatButton';
-
 
 // TODO: import {Documents} from 'path to models'
 

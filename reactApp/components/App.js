@@ -1,10 +1,14 @@
 import React from 'react';
 
-import EditorView from './EditorView.js';
+import Routes from '../routes/Routes';
+import Test from './Test';
 
 const App = () => {
   return (
-      <EditorView />
+    <div>
+      <Routes />
+      <Test />
+    </div>
   );
 };
 
