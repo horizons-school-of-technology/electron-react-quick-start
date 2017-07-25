@@ -1,22 +1,8 @@
 import React from 'react';
-import {Link, Route} from 'react-router-dom';
-import TextEdit from './TextEdit.js';
-import Toolbar from './Toolbar.js';
-import DocumentPortal from './DocumentPortal.js';
 
 // TODO: import {Documents} from 'path to models'
 
-class EditorView extends React.Component {
-  onSave() {
-    // TODO: if document exists, update. Else, create and save
-
-  }
-
-  onBack() {
-    // TODO: if document is not saved, notify user that changes could
-    // be lost. Prompt for save in this modal as well. Continue button in
-    // modal too
-  }
+class DocumentPortal extends React.Component {
 
   render() {
     return (
@@ -26,8 +12,7 @@ class EditorView extends React.Component {
           <p> Sharable Document ID: 69696969 </p><br></br>
         </div>
         <div style={centeredBtn()}>
-          <Route path="/documents" component={DocumentPortal} />
-          <Link role="button" to="/documents" onClick={() => this.onBack()}>Back to Documents Portal</Link>
+          <button onClick={() => this.onBack()}>Back to Documents Portal</button>
           <button onClick={() => this.onSave()}>Save Changes</button><br></br>
         </div>
         <Toolbar />
@@ -66,4 +51,4 @@ const outsideStyle = () => ({
   'background': '#ededed'
 });
 
-export default EditorView;
+export default DocumentPortal;

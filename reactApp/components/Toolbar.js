@@ -7,32 +7,32 @@ import {connect} from 'react-redux';
 import {onBoldClick, onItalicClick, onStrikeClick} from '../actions/actions.js'; // import relevant actions
 
 let Toolbar = ({onBoldClick, onItalicClick, onStrikeClick}) => {
-    return (
+  return (
 
-      <div style={divStyle()}>
-        {/* <div className="RichEditor-controls">
-          {INLINE_STYLES.map(type =>
-            <button
-              // key={type.label}
-              // active={currentStyle.has(type.style)}
-              // label={type.label}
-              // onToggle={props.onToggle}
-              style={type.style}
-            />
-          )}
-        </div> */}
-        <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'/>
-        <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css'/>
-        <link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css'/>
-        <button className="input-group-addon" style={btn()} onClick={() => onBoldClick()} ><i className="glyphicon glyphicon-bold"></i></button>
-        <button className="input-group-addon" style={btn()} onClick={() => onItalicClick()} ><i className="glyphicon glyphicon-italic"></i></button>
-        <button className="input-group-addon" style={btn()} onClick={() => onStrikeClick()} ><i className="glyphicon glyphicon-minus"></i></button>
+    <div style={divStyle()}>
+      {/* <div className="RichEditor-controls">
+        {INLINE_STYLES.map(type =>
+          <button
+            // key={type.label}
+            // active={currentStyle.has(type.style)}
+            // label={type.label}
+            // onToggle={props.onToggle}
+            style={type.style}
+          />
+        )}
+      </div> */}
+      <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'/>
+      <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css'/>
+      <link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css'/>
+      <button className="input-group-addon" style={btn()} onClick={() => onBoldClick()} ><i className="glyphicon glyphicon-bold"></i></button>
+      <button className="input-group-addon" style={btn()} onClick={() => onItalicClick()} ><i className="glyphicon glyphicon-italic"></i></button>
+      <button className="input-group-addon" style={btn()} onClick={() => onStrikeClick()} ><i className="glyphicon glyphicon-minus"></i></button>
 
-        {/* <span className="input-group-addon"><i className="glyphicon glyphicon-user"></i></span>
-        <button style={btn()} onClick={() => {}}>Italic</button>
-        <button style={btn()} onClick={() => {}}>Underline</button> */}
-      </div>
-    );
+      {/* <span className="input-group-addon"><i className="glyphicon glyphicon-user"></i></span>
+      <button style={btn()} onClick={() => {}}>Italic</button>
+      <button style={btn()} onClick={() => {}}>Underline</button> */}
+    </div>
+  );
 };
 
 Toolbar.propTypes = {
@@ -45,11 +45,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-      onBoldClick: () => dispatch(onBoldClick()),
-      onItalicClick: () => dispatch(onItalicClick()),
-      onStrikeClick: () => dispatch(onStrikeClick())
-    };
+  return {
+    onBoldClick: () => dispatch(onBoldClick()),
+    onItalicClick: () => dispatch(onItalicClick()),
+    onStrikeClick: () => dispatch(onStrikeClick())
+  };
 };
 
 Toolbar = connect(
