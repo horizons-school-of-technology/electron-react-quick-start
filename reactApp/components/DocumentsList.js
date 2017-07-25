@@ -51,12 +51,13 @@ class DocumentsList extends React.Component {
     this.setState({documents: Promise.all(docsObjPromiseArr)});
   }
   createDoc() {
+    prompt
     axios({
       method: 'post',
       url: 'http://localhost:3000/createDoc',
       data: {
         title: this.props.userId,
-        author: this.,
+        author: this.props.history.username,
         password:
       }
     })
