@@ -1,10 +1,10 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-
-import Login from './components/Login';
-// import App from './components/App';
-//import Register from './components/Register';
-//import TextEditor from './components/TextEditor';
+import { HashRouter as Router } from 'react-router-dom';
+//import Login from './components/Login';
+import App from './components/App';
+// import Register from './components/Register';
+// import TextEditor from './components/TextEditor';
 
 /* This can check if your electron app can communicate with your backend */
 // fetch('http://localhost:3000')
@@ -12,5 +12,8 @@ import Login from './components/Login';
 //   .then(text => console.log(text))
 //   .catch(err => {throw err;});
 
-ReactDOM.render(<Login />, document.getElementById('root'));
-
+ReactDOM.render(
+  <Router>
+    <App />
+  </Router>
+  , document.getElementById('root'));
