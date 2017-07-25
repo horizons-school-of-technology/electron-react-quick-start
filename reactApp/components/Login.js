@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Redirect, browserHistory } from 'react-router';
+import { Redirect } from 'react-router';
 
 /**
  * This component allows the user to attempt to login to our app,
@@ -54,7 +54,10 @@ class Login extends React.Component {
   }
 
   render() {
-    if(this.state.willRedirect) { 
+    if(this.state.willRedirect) {
+      this.setState({
+        willRedirect: false,
+      });
       return (
         <Redirect to='/docList' />
       );

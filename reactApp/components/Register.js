@@ -9,13 +9,13 @@ class Register extends React.Component {
       username: '',
       password: '',
       confirmPassword: '',
+      willRedirect: false
     };
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleConfirmPwChange = this.handleConfirmPwChange.bind(this);
     this.makeRegisterRequest = this.makeRegisterRequest.bind(this);
   }
-
 
   handleUsernameChange(event) { this.setState({ username: event.target.value }); }
   handlePasswordChange(event) { this.setState({ password: event.target.value }); }
@@ -31,11 +31,23 @@ class Register extends React.Component {
         confirmPassword: this.state.confirmPassword
       }
     })
-      .then((resp) => console.log("Register Response: ", resp))
+      .then((resp) => {
+        this.setState({willRedirect: true});
+        console.log("Register Response: ", resp);
+      })
       .catch(err => console.log("Register Error Response: ", err));
   }
 
   render() {
+    if(this.state.willRedirect) {
+      this.setState({
+        willRedirect: false,
+      });
+
+      return (
+        <Redirect to="/login" />
+      );
+    }
     return(
       <div>
         <form onSubmit={this.makeRegisterRequest}>
@@ -55,7 +67,7 @@ class Register extends React.Component {
               <p> Confirm Password </p>
               <input
                 type="password"
-                placeholder="Password"
+                placeholder="Confirm Password"
                 value={this.state.confirmPassword}
                 onChange={this.handleConfirmPwChange}></input> <br></br>
                 <input
