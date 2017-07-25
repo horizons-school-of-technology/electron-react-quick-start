@@ -7,6 +7,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const User = require('./models/models').User;
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -36,6 +38,20 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // END PASSPORT HERE --------------------------------------------------------
+
+// SOCKET HANDLER ------------------------------------------------------------
+io.on('connection', socket => {
+  console.log('connected');
+  socket.on('newEvent', function() {
+    console.log('NEW EVENT HAS BEEN EMITTED');
+  });
+  // socket.on('username', username => {
+  //   if (!username || !username.trim()) {
+  //     return socket.emit('errorMessage', 'No username!');
+  //   }
+  //   socket.username = String(username);
+});
+// END SOCKET HANDLER --------------------------------------------------------
 
 app.get('/', (req, res) => {
   res.send('Hit the / route!');
@@ -74,7 +90,7 @@ app.use((req, res, next) => {
 });
 // ---------------------------------------------------------------------------
 
-app.listen(3000, () => {
+server.listen(3000, () => {
   console.log('Backend server for Electron Docs App running on port 3000!');
 });
 
