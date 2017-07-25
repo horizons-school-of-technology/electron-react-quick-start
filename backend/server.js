@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 var models = require('../models/models');
-var User = models.User;
 var Document = models.Document;
 
 // Example route
