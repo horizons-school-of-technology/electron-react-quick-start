@@ -26,6 +26,20 @@ export function onStrikeClick(e) {
   };
 }
 
+export function onUnderlineClick(e) {
+  e.preventDefault();
+  return {
+    type: 'UNDERLINE'
+  };
+}
+
+export function onCodeClick(e) {
+  e.preventDefault();
+  return {
+    type: 'CODE'
+  };
+}
+
 export function newDoc(userId, docName) {
   return {
     type: 'NEW_DOC',
