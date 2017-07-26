@@ -1,8 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import styles from '../styles/styles';
-import '../styles/container.scss';
+import { Redirect } from 'react-router';
 
 /**
  * This component allows the user to attempt to login to our app,
@@ -15,6 +14,7 @@ class Login extends React.Component {
     this.state = {
       username: '',
       password: '',
+      willRedirect: false,
     };
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -39,46 +39,52 @@ class Login extends React.Component {
       url: 'http://localhost:3000/login',
       data: {
         username: this.state.username,
-        lastName: this.state.password,
+        password: this.state.password,
       }
     })
-      .then((resp) => {console.log("Login Response: ", resp);})
+      .then((resp) => {
+        if(resp.data.success) {
+          this.setState({
+            willRedirect: true
+          });
+        }
+        console.log("Login Response: ", resp);
+      })
       .catch(err => console.log("Login Error Response: ", err));
   }
 
   render() {
+    if(this.state.willRedirect) {
+      this.setState({
+        willRedirect: false,
+      });
+      this.props.history.username = this.state.username;
+      return (
+        <Redirect to='/docList' />
+      );
+    }
+
     return(
-      <div className="alignCenter">
-        <div className="spacer50"></div>
-        <div className="spacer"></div>
+      <div>
         <form onSubmit={this.makeLoginRequest}>
-          <h1 className="h1NoMargin">Login</h1>
-          <div className="alignRow">
-              <span className="icon"><i className="fa fa-user-o" aria-hidden="true"></i></span>
-            <input
-              type="text"
-              placeholder="Username"
-              value={this.state.username}
-              style={styles.inputBox}
-              onChange={this.handleUsernameChange}></input>
-          </div>
-          <div className="alignRowC">
-            <span className="icon"><i className="fa fa-lock" aria-hidden="true"></i></span>
-            <input
-              type="password"
-              placeholder="Password"
-              style={styles.inputBox}
-              value={this.state.password}
-              onChange={this.handlePasswordChange}></input> <br></br>
-          </div>
-          <div className="alignRowC">
-            <input
-              type="submit"
-              style={styles.buttonMedNoMarginG}
-              ></input>
-              <Link to="/register" style={styles.buttonMedNoMarginO}>Register</Link>
-          </div>
+          <h1>Login</h1>
+          <p>Username</p>
+          <input
+            type="text"
+            placeholder="Username"
+            value={this.state.username}
+            onChange={this.handleUsernameChange}></input>
+          <p>Password</p>
+          <input
+            type="password"
+            placeholder="Password"
+            value={this.state.password}
+            onChange={this.handlePasswordChange}></input> <br></br>
+          <input
+            type="submit"
+            ></input>
         </form>
+        <Link to="/register">Register</Link>
       </div>
     );
   }

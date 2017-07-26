@@ -41,25 +41,14 @@ app.use(passport.session());
 // END PASSPORT HERE --------------------------------------------------------
 
 // SOCKET HANDLER ------------------------------------------------------------
-console.log("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 io.on('connection', socket => {
-  console.log('connectedddddddddddddddddddd');
   socket.on('newEvent', function() {
-    console.log('NEW EVENT HAS BEEN EMITTED');
   });
 
   socket.on('liveEdit', stringRaw => {
-    console.log('hi look its ln 52 from server', stringRaw);
-    // if (!socket.room) {
-    //   return socket.emit('errorMessage', 'No rooms joined!');
-    // }
+
     socket.broadcast.emit('broadcastEdit', stringRaw);
   });
-  // socket.on('username', username => {
-  //   if (!username || !username.trim()) {
-  //     return socket.emit('errorMessage', 'No username!');
-  //   }
-  //   socket.username = String(username);
 });
 
 
@@ -82,6 +71,7 @@ app.post('/login',
     successFlash: "Login Successful!"
   })
 );
+
 app.post('/save', (req, res) => {
   var docId = req.body.docId;
   var version = req.body.version;
@@ -96,10 +86,9 @@ app.post('/save', (req, res) => {
       res.json({success: true})
     }
   })
-
 })
+
 app.post('/register', (req, res) => {
-  console.log("Hey!");
   var username = req.body.username;
   var password = req.body.password;
   var confirmPassword = req.body.confirmPassword;
@@ -156,8 +145,6 @@ app.post('/createDoc', (req, res) => {
       });
     });
   });
-
-
 });
 
 // This route is for when we want to make a new doc
@@ -189,12 +176,10 @@ app.post('/editor/saved', (req, res) => {
 });
 
 app.post('/save', (req, res) => {
-  console.log("Inside save");
   var docId = req.body.docId;
   var version = req.body.version;
   Doc.findById(docId)
   .then((doc) => {
-    console.log("doc in /save" , doc);
     doc.versions.unshift(version);
     doc.save((err) => {
       if (err) {

@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom';
 import styles from '../styles/styles';
 import '../styles/container.scss';
 import '../styles/blockstyles.scss';
-//import io from 'socket.io-client'
+import io from 'socket.io-client'
 
 const styleMap ={
   'STRIKETHROUGH': styles.strikethrough,
@@ -39,32 +39,26 @@ class TextEditor extends React.Component {
       docId: this.props.history.currentDoc._id || this.props.history.newDocId,
       collaborators: this.props.history.currentDoc.collaborators,
       willRedirect: false,
-      thisDoc: this.props.history.currentDoc
+      thisDoc: this.props.history.currentDoc,
+      socket: null
     };
     this.onChange = (editorState) => this.setState({editorState});
     this.handleSaveDocument = this.handleSaveDocument.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount(){
     if (this.state.thisDoc && this.state.thisDoc.versions.length > 0) {
       var content = convertFromRaw(JSON.parse(this.state.thisDoc.versions[0].content));
       this.setState({
         editorState: EditorState.createWithContent(content),
       });
     }
-  }
-
-  componentDidMount(){
     //   var socket = this.props.socket
     this.socket = io.connect('http://localhost:3000');
-    //   console.log('bitch look here', socket);
+    this.setState({socket: this.socket});
     this.socket.on('broadcastEdit', stringRaw => {
-      console.log('STRING|RAW', stringRaw);
-      //const backFromRaw =  convertFromRaw(stringRaw);
       const content = convertFromRaw(JSON.parse(stringRaw));
-      console.log("this is it", content);
       this.setState({editorState: EditorState.createWithContent(content)});
-        // console.log('LN83', this.state.message.content);
     });
   }
 
@@ -295,10 +289,10 @@ class TextEditor extends React.Component {
               <Editor
                 style={styles.editor}
                 editorState={this.state.editorState} onChange={(event) => {
+                    this.state.socket.emit('liveEdit', stringRaw);
                     this.onChange(event);
                     console.log("RAW", raw)
                     console.log('STRINGRAW', stringRaw);
-                    this.socket.emit('liveEdit', stringRaw);
                 }}
                 customStyleMap={styleMap} blockStyleFn={this.blockStyleFn}
                 blockRenderMap={extendedBlockRenderMap}
