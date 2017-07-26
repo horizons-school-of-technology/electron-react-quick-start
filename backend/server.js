@@ -45,8 +45,15 @@ app.post('/create', function(req, res) {
   // add the saved doc (id and name) to user who made it
   .then((newDocId) => {
     User.findById(req.body.userId, function(err, usr) {
-      usr.documents = usr.documents.push({docName: req.body.docName, docId: newDocId._id, isShared: false});
-      usr.save();
+      usr.documents.push({docName: req.body.docName, docId: newDocId._id, isShared: false});
+      usr.save(function(err, usr) {
+        if (err) {
+          console.log("err saving docs", err);
+        } else {
+          console.log('sucesssss');
+        }
+      });
+      console.log('what is user', usr);
       return res.send({docName: req.body.docName, docId: newDocId._id, isShared: false});
     })
     .catch((err) => {

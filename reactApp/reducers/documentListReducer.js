@@ -41,6 +41,14 @@ const documentListReducer = (state = [], action) => {
     //         });
     return state;
   }
+
+  case 'DELETE_DOC': {
+    let newState = [...state];
+    //TODO: need to go throuhg newState and delete specific doc.
+
+
+    return newState;
+  }
   default: {
     return state;
   }
