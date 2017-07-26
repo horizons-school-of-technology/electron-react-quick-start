@@ -40,17 +40,34 @@ export function onCodeClick(e) {
   };
 }
 
-export function newDoc(userId, docName) {
+export function newDoc(userId, docName, docId) {
   return {
     type: 'NEW_DOC',
     docName,
-    userId
+    userId,
+    docId,
   };
 }
 
 export function addSharedDoc(userId, docId) {
   return {
     type: 'ADD_SHARED_DOC',
+    docId,
+    userId
+  };
+}
+
+export function openDoc(userId, docId) {
+  return {
+    type: 'OPEN_DOC',
+    docId,
+    userId
+  };
+}
+
+export function deleteDoc(userId, docId) {
+  return {
+    type: 'DELETE_DOC',
     docId,
     userId
   };

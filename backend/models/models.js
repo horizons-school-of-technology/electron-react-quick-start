@@ -14,12 +14,10 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  documentsOwned: {
+  documents: {
     type: Array
   },
-  documentsShared: {
-    type: Array
-  }
+  //documents is array of objects with (docId, docName, isShared (whether it is a shared doc or not))
 });
 
 

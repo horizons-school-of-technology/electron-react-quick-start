@@ -31,7 +31,7 @@ const documentListReducer = (state = [], action) => {
         .then((newDocId) => {
           User.findById(action.userId)
               .then((err, usr) => {
-                usr.documentsOwned = usr.documentsOwned.push({docName: action.docName, docId: newDocId});
+                usr.documentsOwned = usr.documentsOwned.push({docName: action.docName, docId: newDocId, isShared: false});
                 usr.save();
                 return {docsOwned: usr.documentsOwned, docsShared: usr.documentsShared};
               });

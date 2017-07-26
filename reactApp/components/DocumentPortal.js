@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {newDoc, addSharedDoc} from '../actions/actions.js';
+import {newDoc, addSharedDoc, deleteDoc, openDoc} from '../actions/actions.js';
 
 import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
@@ -10,7 +10,7 @@ import {indigo50, indigo100} from 'material-ui/styles/colors';
 import NewDoc from 'material-ui/svg-icons/action/note-add';
 import {Toolbar, ToolbarGroup, ToolbarSeparator} from 'material-ui/Toolbar';
 import Paper from 'material-ui/Paper';
-
+import axios from 'axios';
 
 // TODO: import {Documents} from 'path to models'
 
@@ -53,7 +53,36 @@ const tempStyles = {
 
 };
 
-let DocumentPortal = ({onNewDocClick, onSharedClick, userId}) => {
+const onNewDocClick = (userId, docName) => {
+  //send axios post request to local host 3000/create, use docId from mongo
+  axios.post('/create', {
+    userId,
+    docName,
+  })
+  .then((resp) => {
+    console.log('this is resp', resp);
+  });
+  //then: dispatch action onNewClick
+};
+
+const onSharedDocClick = (userId,  docId) => {
+  //send axios post request to local host 3000/addShared
+  //then: dispatch action onSharedClick
+};
+
+const onDeleteDocClick = (userId, docId) => {
+  //send axios post request to local host 3000/delete
+  //then: dispatch action onDeleteClick
+};
+
+const onDocOpenClick = (userId, docId) => {
+  //send axios get request to local host 3000/open?docId=
+  //then dispatch action onOpenClick
+};
+
+
+
+let DocumentPortal = ({userId}) => {
   return (
     <div>
         <div>
@@ -79,7 +108,7 @@ let DocumentPortal = ({onNewDocClick, onSharedClick, userId}) => {
       <input type="text" id="docName" placeholder="New Document Name" ></input>
       <button onClick={() => onNewDocClick(userId, document.getElementById('docName').value)}>Create</button><br></br>
       <input type="text" id="docID" placeholder="Document ID"></input>
-      <button onClick={() => onSharedClick(userId, document.getElementById('docId').value)}>Add</button>
+      <button onClick={() => onSharedDocClick(userId, document.getElementById('docId').value)}>Add</button>
     </div>
   );
 };
@@ -87,6 +116,8 @@ let DocumentPortal = ({onNewDocClick, onSharedClick, userId}) => {
 DocumentPortal.propTypes = {
   onNewDocClick: PropTypes.func,
   onSharedClick: PropTypes.func,
+  onDeleteClick: PropTypes.func,
+  onOpenClick: PropTypes.func,
   userId: PropTypes.String
 };
 
@@ -98,8 +129,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onNewDocClick: (userId, newDocName) => dispatch(newDoc(userId, newDocName)),
-    onSharedClick: (userId, docId) => dispatch(addSharedDoc(userId, docId))
+    onNewClick: (userId, newDocName) => dispatch(newDoc(userId, newDocName)),
+    onSharedClick: (userId, docId) => dispatch(addSharedDoc(userId, docId)),
+    onDeleteClick: (userId, docId) => dispatch(deleteDoc(userId, docId)),
+    onOpenClick: (userId, docId) => dispatch(openDoc(userId, docId)),
   };
 };
 
