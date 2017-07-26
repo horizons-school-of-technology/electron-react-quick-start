@@ -39,7 +39,11 @@ const documentListReducer = (state = [], action) => {
     //         .catch((err) => {
     //           console.log('Error creating new document', err);
     //         });
-    return state;
+    console.log('action :', action);
+    let newState = [...state];
+    newState.push({docId: action.docId, docName: action.docName, isShared: action.isShared});
+    console.log('newState is', newState);
+    return newState;
   }
 
   case 'DELETE_DOC': {

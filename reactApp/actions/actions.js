@@ -61,11 +61,12 @@ export function newDoc(docName, docId, isShared) {
   };
 }
 
-export function addSharedDoc(userId, docId) {
+export function addSharedDoc(docName, docId, isShared) {
   return {
     type: 'ADD_SHARED_DOC',
+    docName,
+    isShared,
     docId,
-    userId
   };
 }
 
