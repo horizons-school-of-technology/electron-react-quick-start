@@ -46,14 +46,7 @@ app.post('/create', function(req, res) {
   .then((newDocId) => {
     User.findById(req.body.userId, function(err, usr) {
       usr.documents.push({docName: req.body.docName, docId: newDocId._id, isShared: false});
-      usr.save(function(err, usr) {
-        if (err) {
-          console.log("err saving docs", err);
-        } else {
-          console.log('sucesssss');
-        }
-      });
-      console.log('what is user', usr);
+      usr.save();
       return res.send({docName: req.body.docName, docId: newDocId._id, isShared: false});
     })
     .catch((err) => {
