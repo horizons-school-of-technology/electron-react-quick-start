@@ -1,9 +1,19 @@
+import mongoose from 'mongoose';
+mongoose.connect('mongodb://Prateek:123@ds125623.mlab.com:25623/google-docs');
+
+const User = require('../../backend/models/models');
+
+
 export function onChangeAction(newEditorState) {
   return {
     type: 'CHANGED',
     newEditorState
   };
 }
+
+// -----------------------------------------------------------------------------
+// ------------------------------EditorView Actions-----------------------------
+// -----------------------------------------------------------------------------
 
 export function onBoldClick(e) {
   e.preventDefault();
@@ -40,6 +50,14 @@ export function onCodeClick(e) {
   };
 }
 
+// -----------------------------------------------------------------------------
+// ---------------------------DocumentPortal Actions----------------------------
+// -----------------------------------------------------------------------------
+
+export function renderDocs(userId) {
+
+}
+
 export function newDoc(docName, docId, isShared) {
   return {
     type: 'NEW_DOC',
@@ -72,3 +90,16 @@ export function deleteDoc(userId, docId) {
     userId
   };
 }
+
+// export function newDocThunk(userId, docName) {
+//   return function(dispatch) {
+//     const doc = new Document({
+//       title: docName,
+//       userOwnedId: userId,
+//       collaborators: [userId]
+//     });
+//
+//     return doc.save()
+//               .then()
+//   }
+// }

@@ -31,7 +31,6 @@ app.post('/register', function(req, res){
 // -----------------------------------------------------------------------------
 // --------------------------DocumentPortal Routes------------------------------
 // -----------------------------------------------------------------------------
-
 app.post('/create', function(req, res) {
   // Create new document
   const doc = new Document({
@@ -66,19 +65,8 @@ app.post('/create', function(req, res) {
   });
 });
 
-app.post('/addShared', function(req, res) {
-  // req.body has userId, docId
-  // TODO: update documents. Find by docId, add userId as collaborator.
-      // inside that, update user with {docName: doc.title, docId: docId, isShared: true}
-
-});
-
-app.post('/delete', function(req, res) {
-
-});
-
-app.get('/open/:docId', function(req, res) {
-
+app.post('/addShared', function(req, res){
+  // TODO: update document's collaborators, update user's sharedDoc list, re-render
 });
 
 // -----------------------------------------------------------------------------
