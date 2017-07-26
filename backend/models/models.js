@@ -3,8 +3,6 @@ const mongoose = require('mongoose');
 // var connect = process.env.MONGODB_URI || require('./connect');
 mongoose.connect(process.env.MONGODB_URI);
 
-// import {EditorState} from 'draft-js';
-
 const userSchema = mongoose.Schema({
   username: {
     type: String,
@@ -14,9 +12,15 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  documents: {
-    type: Array
-  },
+  documents:
+  [
+    {
+      docName: String,
+      docId: String,
+      isShared: Boolean
+    }
+  ]
+  ,
   //documents is array of objects with (docId, docName, isShared (whether it is a shared doc or not))
 });
 

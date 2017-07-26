@@ -5,6 +5,10 @@ export function onChangeAction(newEditorState) {
   };
 }
 
+// -----------------------------------------------------------------------------
+// ------------------------------EditorView Actions-----------------------------
+// -----------------------------------------------------------------------------
+
 export function onBoldClick(e) {
   e.preventDefault();
   return {
@@ -38,6 +42,14 @@ export function onCodeClick(e) {
   return {
     type: 'CODE'
   };
+}
+
+// -----------------------------------------------------------------------------
+// ---------------------------DocumentPortal Actions----------------------------
+// -----------------------------------------------------------------------------
+
+export function renderDocs(userId) {
+
 }
 
 export function newDoc(docName, docId, isShared) {

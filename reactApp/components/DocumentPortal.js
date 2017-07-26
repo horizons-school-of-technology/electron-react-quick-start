@@ -12,8 +12,6 @@ import {Toolbar, ToolbarGroup, ToolbarSeparator} from 'material-ui/Toolbar';
 import Paper from 'material-ui/Paper';
 import axios from 'axios';
 
-// TODO: import {Documents} from 'path to models'
-
 const tempStyles = {
   toolbarStyle: {
     'backgroundColor': '#2481b7',
@@ -54,17 +52,13 @@ const tempStyles = {
 };
 
 const onNewDocClick = (userId, docName, onNewClick) => {
-  //send axios post request to local host 3000/create, use docId from mongo
   axios.post('http://localhost:3005/create', {
     userId,
     docName,
   })
   .then((resp) => {
-    // console.log('name',resp.data.docName,"id",resp.data.docId, 'user', userId);
-    // onNewClick(resp.
     onNewClick(resp.data.docName, resp.data.docId, resp.data.isShared);
   });
-    //then: dispatch action onNewClick
 };
 
 const onSharedDocClick = (userId,  docId, onNewSharedClick) => {
@@ -87,6 +81,9 @@ const onSharedDocClick = (userId,  docId, onNewSharedClick) => {
 const onDeleteDocClick = (userId, docId) => {
   //send axios post request to local host 3000/delete
   //then: dispatch action onDeleteClick
+  axios.post('http://localhost:3005/delete', {
+
+  });
 };
 
 const onDocOpenClick = (userId, docId) => {
@@ -96,7 +93,7 @@ const onDocOpenClick = (userId, docId) => {
 
 
 
-let DocumentPortal = ({userId, onNewClick, onNewSharedClick}) => {
+let DocumentPortal = ({userId, onNewClick, docId, onNewSharedClick}) => {
   return (
     <div>
         <div>
@@ -123,6 +120,7 @@ let DocumentPortal = ({userId, onNewClick, onNewSharedClick}) => {
       <button onClick={() => onNewDocClick(userId, document.getElementById('docName').value, onNewClick)}>Create</button><br></br>
       <input type="text" id="docId" placeholder="Document ID"></input>
       <button onClick={() => onSharedDocClick(userId, document.getElementById('docId').value, onNewSharedClick)}>Add</button>
+      <IconButton onClick={() => onDeleteDocClick(userId, docId)}><i className="material-icons">delete_forever</i></IconButton>
     </div>
   );
 };
