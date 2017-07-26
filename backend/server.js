@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const User = require('./models/models').User;
 const Doc = require('./models/models').Doc;
-const server = require('http').Server(app);
+const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 app.use(bodyParser.json());
@@ -41,10 +41,19 @@ app.use(passport.session());
 // END PASSPORT HERE --------------------------------------------------------
 
 // SOCKET HANDLER ------------------------------------------------------------
+console.log("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 io.on('connection', socket => {
-  console.log('connected');
+  console.log('connectedddddddddddddddddddd');
   socket.on('newEvent', function() {
     console.log('NEW EVENT HAS BEEN EMITTED');
+  });
+
+  socket.on('liveEdit', stringRaw => {
+    console.log('hi look its ln 52 from server', stringRaw);
+    // if (!socket.room) {
+    //   return socket.emit('errorMessage', 'No rooms joined!');
+    // }
+    socket.broadcast.emit('broadcastEdit', stringRaw);
   });
   // socket.on('username', username => {
   //   if (!username || !username.trim()) {
@@ -52,10 +61,17 @@ io.on('connection', socket => {
   //   }
   //   socket.username = String(username);
 });
+
+
+
 // END SOCKET HANDLER --------------------------------------------------------
 
 app.get('/', (req, res) => {
   res.send('Hit the / route!');
+});
+
+app.get('/login', (req, res) => {
+  res.send('We good fham');
 });
 
 app.post('/login',
@@ -105,9 +121,8 @@ app.get('/failureLogin', (req, res) => {
   res.send({success: false});
 });
 
-app.post('/docs', (req, res) => {
-  var userId = req.body.userId;
-  User.findById(userId)
+app.get('/docs', (req, res) => {
+  User.findOne({username: req.user.username})
   .then((user) => {
     res.json({user: user});
   })
@@ -119,26 +134,75 @@ app.post('/docs', (req, res) => {
 app.post('/createDoc', (req, res) => {
   var newDoc = new Doc({
     title: req.body.title,
-    author: req.body.userId,
+    author: req.user.username,
     password: req.body.password
   });
   newDoc.save((err, doc) => {
     if (err) {
       res.json({failure: err});
     }
-    User.findById(req.body.userId)
+
+    User.findOne({username: req.user.username})
     .then((user) => {
       user.docs.push({id: doc._id, isOwner: true});
+      user.save((err, user) => {
+        if(err) { res.json(err); }
+        res.json({
+          success: true,
+          title: req.body.title,
+          author: req.user.username,
+          docId: doc._id
+        });
+      });
+    });
+  });
+
+
+});
+
+// This route is for when we want to make a new doc
+app.post('/editor/new', (req, res) => {
+  // We need the  doc title, documentId and author
+  // var author = req.user.username;
+  // var documentId = req.body.docId;
+  // var docTitle = req.body.docTitle;
+
+
+});
+
+// This route is for when we want to open a saved document
+app.post('/editor/saved', (req, res) => {
+  var docId = req.body.docId;
+  Doc.findById(docId)
+  .then((doc) => {
+    if(!doc) {
+      res.json({
+        success: false,
+        error: "MongoDB Error: The document could not be found!"
+      });
+    }
+    res.json({
+      success: true,
+      doc: doc
     });
   });
 });
 
-
-app.post('/editor', (req, res) => {
+app.post('/save', (req, res) => {
+  console.log("Inside save");
   var docId = req.body.docId;
-  Document.findOne({id: docId})
+  var version = req.body.version;
+  Doc.findById(docId)
   .then((doc) => {
-    res.json({doc: doc});
+    console.log("doc in /save" , doc);
+    doc.versions.unshift(version);
+    doc.save((err) => {
+      if (err) {
+        res.json({failure: err});
+      } else {
+        res.json({success: true});
+      }
+    });
   });
 });
 
@@ -161,10 +225,7 @@ server.listen(3000, () => {
  * @return
  */
 const saveUserInMongoDB = (username, password) => {
-  new User({
-    username,
-    password
-  })
+  new User({username, password})
   .save((err) => {
     if(err) {
       console.log("Error creating new user: ", err);

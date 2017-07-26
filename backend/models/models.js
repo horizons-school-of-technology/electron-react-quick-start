@@ -46,13 +46,10 @@ var Doc = mongoose.model('Doc', {
     required: true
   },
   collaborators: {
-    type: Schema.ObjectId,
-    required: true,
-    ref: 'User',
+    type: Array,
   },
   versions: {
     type: Array,
-    required: true,
   },
 });
 
