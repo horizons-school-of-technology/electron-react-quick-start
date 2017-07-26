@@ -67,7 +67,7 @@ class DocumentsList extends React.Component {
     })
     .catch(err => console.log("DocsList Fetch Error Response: ", err));
   }
-  render() {
+  render() { 
     return(
       <div>
         <h1 style={styles.title}>👋🏼  Hey Asif!</h1>
