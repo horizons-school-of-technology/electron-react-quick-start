@@ -1,5 +1,5 @@
 import React from 'react';
-import {Editor, EditorState, RichUtils, DefaultDraftBlockRenderMap} from 'draft-js';
+import {Editor, EditorState, RichUtils, DefaultDraftBlockRenderMap, convertToRaw, convertFromRaw} from 'draft-js';
 import axios from 'axios';
 import { Map } from 'immutable';
 import { Redirect } from 'react-router-dom';
@@ -39,16 +39,19 @@ class TextEditor extends React.Component {
       docId: this.props.history.currentDoc._id || this.props.history.newDocId,
       collaborators: this.props.history.currentDoc.collaborators,
       willRedirect: false,
-      thisDoc: this.props.history.currentDoc || {}
+      thisDoc: this.props.history.currentDoc
     };
     this.onChange = (editorState) => this.setState({editorState});
+    this.handleSaveDocument = this.handleSaveDocument.bind(this);
   }
 
-  // Loading the doc with the given id in this.props.history.newDocId
   componentDidMount() {
-    // We need the username, doc title, documentId and author
-    if(this.props.history){   console.log("curr doc", this.props.history.currentDoc);}
-
+    if (this.state.thisDoc && this.state.thisDoc.versions.length > 0) {
+      var content = convertFromRaw(JSON.parse(this.state.thisDoc.versions[0].content));
+      this.setState({
+        editorState: EditorState.createWithContent(content),
+      });
+    }
   }
 
   blockStyleFn(contentBlock) {
@@ -170,6 +173,27 @@ class TextEditor extends React.Component {
     ));
   }
 
+  handleSaveDocument() {
+    // Save the curr doc
+    var currVersion = {
+      timeStamp: new Date().toISOString(),
+      content: JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent())),
+      changes: {}   // TODO
+    };
+
+    // docId ---> this.state.docId
+    axios({
+      method: 'post',
+      url: 'http://localhost:3000/save',
+      data: {
+        version: currVersion,
+        docId: this.state.docId
+      }
+    })
+    .then(resp => console.log(resp))
+    .catch(err => console.log("Save doc Err: ", err));
+  }
+
 
   render() {
     if(this.state.willRedirect) {
@@ -187,6 +211,7 @@ class TextEditor extends React.Component {
         </button>
         <button
           style={styles.buttonSave}
+          onClick={this.handleSaveDocument}
           >
           <span><i className="fa fa-floppy-o" aria-hidden="true"></i> Save</span>
         </button>

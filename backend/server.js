@@ -157,6 +157,24 @@ app.post('/editor/saved', (req, res) => {
   });
 });
 
+app.post('/save', (req, res) => {
+  console.log("Inside save");
+  var docId = req.body.docId;
+  var version = req.body.version;
+  Doc.findById(docId)
+  .then((doc) => {
+    console.log("doc in /save" , doc);
+    doc.versions.unshift(version);
+    doc.save((err) => {
+      if (err) {
+        res.json({failure: err});
+      } else {
+        res.json({success: true});
+      }
+    });
+  });
+});
+
 // Error handler/Catch 404 ---------------------------------------------------
 app.use((req, res, next) => {
   var err = new Error('Not Found');

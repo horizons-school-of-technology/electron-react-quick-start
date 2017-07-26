@@ -85,7 +85,7 @@ class DocumentsList extends React.Component {
           // The <p> tags should have Links around them!
       var singleDoc = doc.data.doc;
       return (<Link to="/textEditor" onClick={() => {
-        this.openDocumentClick(singleDoc)
+        this.openDocumentClick(singleDoc);
       }
       }> <p style={styles.p}>{singleDoc.title}</p> </Link>);
     });
@@ -97,7 +97,7 @@ class DocumentsList extends React.Component {
   }
 
   openDocumentClick(doc) {
-    this.props.history.newDocId = doc._id
+    this.props.history.newDocId = doc._id;
     this.props.history.currentDoc = doc;
   }
 
