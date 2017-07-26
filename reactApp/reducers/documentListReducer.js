@@ -13,32 +13,10 @@ const documentListReducer = (state = [], action) => {
     //TODO: check the flow for this. Should be called after clicking new doc btn
   case 'NEW_DOC': {
     // Create new document
-    console.log("hey I'm in newdoc!");
-    // const doc = new Document({
-    //   title: action.docName,
-    //   userOwnedId: action.userId,
-    //   collaborators: [action.userId]
-    // });
-    //
-    // // save the new doc to the db
-    // doc.save()
-    //     .then((err, docSaved) => {
-    //       return docSaved._id;
-    //     })
-    //     // add the saved doc (id and name) to user who made it
-    //     .then((newDocId) => {
-    //       User.findById(action.userId)
-    //           .then((err, usr) => {
-    //             usr.documentsOwned = usr.documentsOwned.push({docName: action.docName, docId: newDocId, isShared: false});
-    //             usr.save();
-    //             return {docsOwned: usr.documentsOwned, docsShared: usr.documentsShared};
-    //           });
-    //       return;
-    //     })
-    //     .catch((err) => {
-    //       console.log('Error creating new document', err);
-    //     });
-    return state;
+    let newState = [...state];
+    newState.push({docId: action.docId, docName: action.docName, isShared: action.isShared});
+    console.log('newState is', newState);
+    return newState;
   }
     //TODO: add a shared doc to user and doc
   case 'ADD_SHARED_DOC': {

@@ -40,11 +40,11 @@ export function onCodeClick(e) {
   };
 }
 
-export function newDoc(userId, docName, docId) {
+export function newDoc(docName, docId, isShared) {
   return {
     type: 'NEW_DOC',
     docName,
-    userId,
+    isShared,
     docId,
   };
 }
