@@ -1,11 +1,12 @@
 import React from 'react';
 import {Editor, EditorState, RichUtils, DefaultDraftBlockRenderMap, convertToRaw, convertFromRaw} from 'draft-js';
-
+import axios from 'axios';
 import { Map } from 'immutable';
+import { Redirect } from 'react-router-dom';
 import styles from '../styles/styles';
 import '../styles/container.scss';
 import '../styles/blockstyles.scss';
-import io from 'socket.io-client'
+//import io from 'socket.io-client'
 
 const styleMap ={
   'STRIKETHROUGH': styles.strikethrough,
@@ -33,11 +34,28 @@ class TextEditor extends React.Component {
     super(props);
     this.state = {
       editorState: EditorState.createEmpty(),
-      message: '',
-      messages:[] // put ln43 here
+
+      docTitle: this.props.history.currentDoc.title || this.props.history.newDocTitle,
+      docAuthor: this.props.history.currentDoc.author || this.props.history.username,
+      docId: this.props.history.currentDoc._id || this.props.history.newDocId,
+      collaborators: this.props.history.currentDoc.collaborators,
+      willRedirect: false,
+      thisDoc: this.props.history.currentDoc
+
     };
     this.onChange = (editorState) => this.setState({editorState});
+    this.handleSaveDocument = this.handleSaveDocument.bind(this);
   }
+
+  componentDidMount() {
+    if (this.state.thisDoc && this.state.thisDoc.versions.length > 0) {
+      var content = convertFromRaw(JSON.parse(this.state.thisDoc.versions[0].content));
+      this.setState({
+        editorState: EditorState.createWithContent(content),
+      });
+    }
+  }
+
   componentDidMount(){
     //   var socket = this.props.socket
     this.socket = io.connect('http://localhost:3000');
@@ -51,6 +69,7 @@ class TextEditor extends React.Component {
         // console.log('LN83', this.state.message.content);
     });
   }
+
 
 
   blockStyleFn(contentBlock) {
@@ -171,22 +190,58 @@ class TextEditor extends React.Component {
       'header-three'
     ));
   }
+
+  handleSaveDocument() {
+    // Save the curr doc
+    var currVersion = {
+      timeStamp: new Date().toISOString(),
+      content: JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent())),
+      changes: {}   // TODO
+    };
+
+    // docId ---> this.state.docId
+    axios({
+      method: 'post',
+      url: 'http://localhost:3000/save',
+      data: {
+        version: currVersion,
+        docId: this.state.docId
+      }
+    })
+    .then(resp => console.log(resp))
+    .catch(err => console.log("Save doc Err: ", err));
+  }
+
+
   render() {
+
     const raw = convertToRaw(this.state.editorState.getCurrentContent());
     const stringRaw = JSON.stringify(raw);
+
+    if(this.state.willRedirect) {
+      return (
+        <Redirect to='/docList'/>
+      );
+    }
+
     return (
       <div id="body">
         <div className="alignSB">
-        <button style={styles.buttonLarge}>
+        <button
+          style={styles.buttonLarge}
+          onClick={() => {this.setState({willRedirect: true});}}>
           <span><i className="fa fa-arrow-left" aria-hidden="true"></i> Documents List</span>
         </button>
-        <button style={styles.buttonSave}>
+        <button
+          style={styles.buttonSave}
+          onClick={this.handleSaveDocument}
+          >
           <span><i className="fa fa-floppy-o" aria-hidden="true"></i> Save</span>
         </button>
         </div>
-        <h1 style={styles.title}>🗒️  Document Title Here</h1>
-        <h3 style={styles.h3}><b>By: Evan Jatharsan</b></h3>
-        <h3 style={styles.h3}>Share this document ID with your collaborators: <b>###DOCUMENTID</b></h3>
+        <h1 style={styles.title}>🗒️  {this.state.docTitle}</h1>
+        <h3 style={styles.h3}><b>By: {this.state.docAuthor}</b></h3>
+        <h3 style={styles.h3}>Share this document ID with your collaborators: <b>{this.state.docId}</b></h3>
         <div style={styles.allButTitle}>
           <div style={styles.toolbar}>
             <button style={styles.buttonflatG} onClick={() => this.makeFontGray()}>
