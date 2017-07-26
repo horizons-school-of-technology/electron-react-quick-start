@@ -41,9 +41,13 @@ app.get('/login', (req, res) => {
   res.send('Hello World!');
 });
 
+app.get('/login', (req, res) => {
+  res.send('We good fham');
+});
+
 app.post('/login',
   passport.authenticate('local', {
-    successRedirect: '/users' , // TODO change the redirect link
+    successRedirect: '/success' , // TODO change the redirect link
     failureRedirect: '/login',
     failureFlash: "dumbass, your login shit is wrong",
     successFlash: "Welcome Bitch"
