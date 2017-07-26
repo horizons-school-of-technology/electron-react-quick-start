@@ -43,6 +43,7 @@ const tempStyles = {
   newDocStyle: {
     'width': '40px',
     'height': '40px',
+    'color': indigo50
   },
   newDocButtonStyle: {
     'width': '80px',
@@ -97,7 +98,7 @@ let DocumentPortal = ({userId, onNewClick, docId}) => {
                 />
                 <ToolbarSeparator style={tempStyles.separator}/>
                 <IconButton tooltip="Create Document" iconStyle={tempStyles.newDocStyle} style={tempStyles.newDocButtonStyle}>
-                  <NewDoc color={indigo50}/>
+                  <NewDoc />
                 </IconButton>
               </ToolbarGroup>
             </Toolbar>
