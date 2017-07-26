@@ -25,3 +25,19 @@ export function onStrikeClick(e) {
     type: 'STRIKETHROUGH'
   };
 }
+
+export function newDoc(userId, docName) {
+  return {
+    type: 'NEW_DOC',
+    docName,
+    userId
+  };
+}
+
+export function addSharedDoc(userId, docId) {
+  return {
+    type: 'ADD_SHARED_DOC',
+    docId,
+    userId
+  };
+}

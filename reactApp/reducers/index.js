@@ -1,13 +1,14 @@
 import { combineReducers } from 'redux';
 // import reducers from other files
 import editorReducer from './editorReducer';
-// import changeReducer from './changeReducer';
+import documentListReducer from './documentListReducer';
 
 // import * as types from '../actions/types';
 
 const rootReducer = combineReducers({
-    // label reducers as the state name to the reducer name
-  editorState: editorReducer,
+  // label reducers as the state name to the reducer name
+  documentList: documentListReducer,
+  editorState: editorReducer
 });
 
 export default rootReducer;

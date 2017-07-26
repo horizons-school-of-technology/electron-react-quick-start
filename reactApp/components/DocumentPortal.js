@@ -1,10 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+
+import {newDoc, addSharedDoc} from '../actions/actions.js';
+
 import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import {indigo50, indigo100} from 'material-ui/styles/colors';
 import NewDoc from 'material-ui/svg-icons/action/note-add';
 import {Toolbar, ToolbarGroup, ToolbarSeparator} from 'material-ui/Toolbar';
 import Paper from 'material-ui/Paper';
+
 
 // TODO: import {Documents} from 'path to models'
 
@@ -37,8 +43,8 @@ const tempStyles = {
     'alignItems': 'center'
   },
   newDocStyle: {
-    'width': '48px',
-    'height': '48px',
+    'width': '40px',
+    'height': '40px',
   },
   newDocButtonStyle: {
     'width': '80px',
@@ -46,46 +52,60 @@ const tempStyles = {
   }
 
 };
-class DocumentPortal extends React.Component {
 
-  onSharedClick() {
-     // TODO: assign actions for when the add shared document button is clicked
-  }
+let DocumentPortal = ({onNewDocClick, onSharedClick, userId}) => {
+  return (
+    <div>
+        <div>
+          <Paper style={tempStyles.topPaper} zDepth={1} children={
+            <Toolbar style={tempStyles.toolbarStyle}>
+              <ToolbarGroup style={tempStyles.groupStyle}>
+                <TextField
+                  hintText="I like big butts and I cannot lie"
+                  underlineStyle={{color: indigo50}}
+                  underlineFocusStyle={{color: indigo50}}
+                  hintStyle={{color: indigo100}}
+                  style={tempStyles.textFieldStyle}
+                />
+                <ToolbarSeparator style={tempStyles.separator}/>
+                <IconButton tooltip="Create Document" iconStyle={tempStyles.newDocStyle} style={tempStyles.newDocButtonStyle}>
+                  <NewDoc color={indigo50}/>
+                </IconButton>
+              </ToolbarGroup>
+            </Toolbar>
+          }/>
 
-  render() {
-    return (
-      <div>
-          <div>
-            <Paper style={tempStyles.topPaper} zDepth={1} children={
-              <Toolbar style={tempStyles.toolbarStyle}>
-                <ToolbarGroup style={tempStyles.groupStyle}>
-                  <TextField
-                    hintText="I like big butts and I cannot lie"
-                    underlineStyle={{color: indigo50}}
-                    underlineFocusStyle={{color: indigo50}}
-                    hintStyle={{color: indigo100}}
-                    style={tempStyles.textFieldStyle}
-                  />
-                  <ToolbarSeparator style={tempStyles.separator}/>
-                  <IconButton tooltip="Create Document" iconStyle={tempStyles.newDocStyle} style={tempStyles.newDocButtonStyle}>
-                    <NewDoc color={indigo50}/>
-                  </IconButton>
-                </ToolbarGroup>
-              </Toolbar>
-            }/>
+        </div>
+      <input type="text" id="docName" placeholder="New Document Name" ></input>
+      <button onClick={() => onNewDocClick(userId, document.getElementById('docName').value)}>Create</button><br></br>
+      <input type="text" id="docID" placeholder="Document ID"></input>
+      <button onClick={() => onSharedClick(userId, document.getElementById('docId').value)}>Add</button>
+    </div>
+  );
+};
 
-          </div>
-        <form action="/action_page.php">
-          <input type="text" name="docName" placeholder="New Document Name" ></input>
-          <input type="submit" value="Submit"></input>
-        </form>
-        <form action="/action_page.php">
-          <input type="text" name="docID" placeholder="Document ID"></input>
-          <input type="submit" value="Submit"></input>
-        </form>
-      </div>
-    );
-  }
-}
+DocumentPortal.propTypes = {
+  onNewDocClick: PropTypes.func,
+  onSharedClick: PropTypes.func,
+  userId: PropTypes.String
+};
+
+const mapStateToProps = state => {
+  return {
+    userId: state.userId
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onNewDocClick: (userId, newDocName) => dispatch(newDoc(userId, newDocName)),
+    onSharedClick: (userId, docId) => dispatch(addSharedDoc(userId, docId))
+  };
+};
+
+DocumentPortal = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(DocumentPortal);
 
 export default DocumentPortal;

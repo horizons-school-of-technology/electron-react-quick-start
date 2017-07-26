@@ -1,6 +1,8 @@
-var mongoose = require('mongoose');
+import mongoose from 'mongoose';
 var connect = process.env.MONGODB_URI || require('./connect');
 mongoose.connect(connect);
+
+import {EditorState} from 'draft-js';
 
 var userSchema = mongoose.Schema({
   user: {
@@ -11,7 +13,10 @@ var userSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  documentsIdOwned: {
+  documentsOwned: {
+    type: Array
+  },
+  documentsShared: {
     type: Array
   }
 });
@@ -19,17 +24,19 @@ var userSchema = mongoose.Schema({
 
 var documentSchema = mongoose.Schema({
   title: {
-    type: String
+    type: String,
+    required: true
   },
-  content: {
-    type: String
+  editorState: {
+    type: EditorState
   },
   userOwnedId: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User'
+    type: String,
+    required: true
   },
-  collaboraters: {
-    type: Array
+  collaborators: {
+    type: Array,
+    required: true
   }
 });
 
