@@ -14,10 +14,10 @@ let Login = ({username, updateUsername, password, updatePassword, onSubmit}) => 
         </div>
         <div className="form-group">
           <label>Password</label>
-          <input type="password" name="password" className="form-control" onChange={(e) => {updatePassword(e.target.value); console.log(password);}}></input>
+          <input type="password" name="password" className="form-control" onChange={(e) => {updatePassword(e.target.value)}}></input>
         </div>
         <div className="form-group">
-          <button className="btn btn-success" onSubmit={(username, password) => onSubmit(username, password)}>Login</button>
+          <button className="btn btn-success" onClick={(e) => {e.preventDefault(); onSubmit();}}>Login</button>
           <a className="btn btn-primary" href="/signup">Register</a>
         </div>
       </form>
@@ -34,7 +34,6 @@ Login.propTypes = {
 };
 
 const mapStateToProps = state => {
-    console.log(state.loginState.password);
   return {
     username: state.loginState.username,
     password: state.loginState.password
@@ -45,7 +44,7 @@ const mapDispatchToProps = dispatch => {
     return {
         updateUsername: (username) => dispatch(saveUsername(username)),
         updatePassword: (password) => dispatch(savePassword(password)),
-        onSubmit: (username, password) => dispatch(login(username, password))
+        onSubmit: (username, password) => dispatch(login())
     };
 };
 

@@ -14,14 +14,14 @@ let Register = ({username, password, verPassword, updateUsername, updatePassword
         </div>
         <div className="form-group">
           <label>Password</label>
-          <input type="password" name="password" className="form-control" onChange={(e) => {updatePassword(e.target.value); console.log(password);}}></input>
+          <input type="password" name="password" className="form-control" onChange={(e) => {updatePassword(e.target.value)}}></input>
         </div>
         <div className="form-group">
           <label>Verify Password</label>
           <input type="password" name="passwordRepeat" className="form-control" onChange={(e) => updateVerPassword(e.target.value)}></input>
         </div>
         <div className="form-group">
-          <button className="btn btn-success" onSubmit={(username, password, verPassword) => onSubmit(username, password, verPassword)}>Register</button>
+          <button className="btn btn-success" onClick={(e) => {e.preventDefault(); onSubmit();}}>Register</button>
         </div>
       </form>
   </div>
@@ -51,7 +51,7 @@ const mapDispatchToProps = dispatch => {
         updateUsername: (username) => dispatch(regUsername(username)),
         updatePassword: (password) => dispatch(regPassword(password)),
         updateVerPassword: (password) => dispatch(verPassword(password)),
-        onSubmit: (username, password, verPassword) => dispatch(register(username, password, verPassword))
+        onSubmit: (username, password, verPassword) => dispatch(register())
     };
 };
 

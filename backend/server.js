@@ -63,6 +63,7 @@ passport.deserializeUser(function(id, done) {
 
 // passport strategy
 passport.use(new LocalStrategy(function(username, password, done) {
+    console.log("HERE");
   // Find the user with the given username
   models.User.findOne({ username: username }, function (err, user) {
     // if there's an error, finish trying to authenticate (auth failed)
@@ -95,27 +96,12 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+  res.send("Error:
+   ", err.message);
 });
 
 var port = process.env.PORT || 3005;

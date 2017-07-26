@@ -11,11 +11,9 @@ export function onChangeAction(newEditorState) {
   };
 }
 
-export function login(username, password) {
+export function login() {
   return {
     type: 'LOGIN',
-    username,
-    password
   };
 }
 
@@ -33,33 +31,29 @@ export function savePassword(password) {
   };
 }
 
-export function regUsername(username) {
+export function regUsername(regUsername) {
   return {
     type: 'REGUSERNAME',
-    username
+    regUsername
   };
 }
 
-export function regPassword(password) {
+export function regPassword(regPassword) {
   return {
     type: 'REGPASSWORD',
-    password
+    regPassword
   };
 }
 
-export function verPassword(password) {
+export function verPassword(verPassword) {
   return {
     type: 'VERPASSWORD',
-    password
+    verPassword
   };
 }
 
-export function register(username, password, verPassword) {
-    console.log("action");
+export function register() {
   return {
     type: 'REGISTER',
-    username,
-    password,
-    verPassword,
   };
 }

@@ -5,18 +5,12 @@ var models = require('../models');
 
 module.exports = function(passport) {
 
-  // GET registration page
-  router.get('/signup', function(req, res) {
-    res.render('signup');
-  });
-
   router.post('/signup', function(req, res) {
-      console.log('bruh');
     // validation step
+    console.log(req.body.username);
     if (req.body.password!==req.body.passwordRepeat) {
-      return res.render('signup', {
-        error: "Passwords don't match."
-      });
+      return res.send("Passwords don't match."
+      );
     }
     var u = new models.User({
       username: req.body.username,
@@ -33,21 +27,11 @@ module.exports = function(passport) {
     });
   });
 
-  // GET Login page
-  router.get('/login', function(req, res) {
-    res.render('login');
-  });
-
   // POST Login page
-  router.post('/login', passport.authenticate('local',{
-    successFlash: 'Welcome!',
-    failureFlash: 'Invalid username or password.'
-  }));
-
-  // GET Logout page
-  router.get('/logout', function(req, res) {
-    req.logout();
-    res.redirect('/');
+  router.post('/login', passport.authenticate('local'),function(req, res){
+    // successFlash: 'Welcome!',
+    // failureFlash: 'Invalid username or password.'
+    res.json('success')
   });
 
   return router;

@@ -3,15 +3,17 @@ import axios from 'axios';
 const loginReducer = (state = {'regUsername': "", 'regPassword': "", 'verPassword': ""}, action) => {
   switch (action.type) {
     case 'REGISTER':
-    // get request to verify login
+    console.log(state);
+    // gpost registration request
         axios.post('http://localhost:3005/signup', {
-            username: action.regUsername,
-            password: action.regPassword,
-            passwordRepeat: action.verPassword
+            username: state.regUsername,
+            password: state.regPassword,
+            passwordRepeat: state.verPassword
         })
         let newState = Object.assign(state)
-            newState.username = action.username
-            newState.password = action.password
+            newState.regUsername = ""
+            newState.regPassword = ""
+            newState.verPassword = ""
         return newState;
 
     case 'REGUSERNAME':
@@ -21,7 +23,7 @@ const loginReducer = (state = {'regUsername': "", 'regPassword': "", 'verPasswor
 
     case 'REGPASSWORD':
         let newState3 = Object.assign(state);
-        newState3.password = action.regPassword
+        newState3.regPassword = action.regPassword
     return newState3;
 
     case 'VERPASSWORD':

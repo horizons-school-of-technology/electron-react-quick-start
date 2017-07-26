@@ -20,23 +20,9 @@ router.use(function(req, res, next){
   }
 });
 
-router.post('/', function(req,res){
-    const newUser = new User ({
-        username: req.body.username,
-        password: req.body.password
-    })
-    newUser.save()
-    res.send('created new user')
-})
-
 //////////////////////////////// PRIVATE ROUTES ////////////////////////////////
 // Only logged in users can see these routes
 
-router.get('/protected', function(req, res, next) {
-  res.render('protectedRoute', {
-    username: req.user.username,
-  });
-});
 
 ///////////////////////////// END OF PRIVATE ROUTES /////////////////////////////
 
