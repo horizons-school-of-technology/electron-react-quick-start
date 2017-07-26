@@ -58,6 +58,7 @@ class Login extends React.Component {
       this.setState({
         willRedirect: false,
       });
+      this.props.history.username = this.state.username;
       return (
         <Redirect to='/docList' />
       );
