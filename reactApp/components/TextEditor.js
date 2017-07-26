@@ -34,10 +34,10 @@ class TextEditor extends React.Component {
     super(props);
     this.state = {
       editorState: EditorState.createEmpty(),
-      docTitle: this.props.history.currentDoc.title || this.props.history.newDocTitle,
-      docAuthor: this.props.history.currentDoc.author || this.props.history.username,
-      docId: this.props.history.currentDoc._id || this.props.history.newDocId,
-      collaborators: this.props.history.currentDoc.collaborators,
+      title: this.props.history.newDocTitle,
+      author: this.props.history.username,
+      docId: this.props.history.newDocId,
+      collaborators: null,
       willRedirect: false,
       thisDoc: this.props.history.currentDoc,
       socket: null
@@ -47,13 +47,20 @@ class TextEditor extends React.Component {
   }
 
   componentDidMount(){
+    if (this.props.history.currentDoc) {
+      this.setState({
+        title: this.props.history.currentDoc.title,
+        author: this.props.history.currentDoc.author,
+        docId: this.props.history.currentDoc._id,
+        collaborators: this.props.history.currentDoc.collaborators,
+      })
+    }
     if (this.state.thisDoc && this.state.thisDoc.versions.length > 0) {
       var content = convertFromRaw(JSON.parse(this.state.thisDoc.versions[0].content));
       this.setState({
         editorState: EditorState.createWithContent(content),
       });
     }
-    //   var socket = this.props.socket
     this.socket = io.connect('http://localhost:3000');
     this.setState({socket: this.socket});
     this.socket.on('broadcastEdit', stringRaw => {
@@ -62,11 +69,12 @@ class TextEditor extends React.Component {
     });
   }
   onChange(editorState) {
+    console.log("THIS IS THE STATE", this.state.editorState.getCurrentContent());
     this.setState({editorState: editorState});
     const raw = convertToRaw(this.state.editorState.getCurrentContent());
     const stringRaw = JSON.stringify(raw);
     this.state.socket.emit('liveEdit', stringRaw);
-    console.log('STRINGRAW FROM CLIENT', stringRaw);
+    // console.log('STRINGRAW FROM CLIENT', stringRaw);
   }
   blockStyleFn(contentBlock) {
     const type = contentBlock.getType();
@@ -231,8 +239,8 @@ class TextEditor extends React.Component {
           <span><i className="fa fa-floppy-o" aria-hidden="true"></i> Save</span>
         </button>
         </div>
-        <h1 style={styles.title}>🗒️  {this.state.docTitle}</h1>
-        <h3 style={styles.h3}><b>By: {this.state.docAuthor}</b></h3>
+        <h1 style={styles.title}>🗒️  {this.state.title}</h1>
+        <h3 style={styles.h3}><b>By: {this.state.author}</b></h3>
         <h3 style={styles.h3}>Share this document ID with your collaborators: <b>{this.state.docId}</b></h3>
         <div style={styles.allButTitle}>
           <div style={styles.toolbar}>

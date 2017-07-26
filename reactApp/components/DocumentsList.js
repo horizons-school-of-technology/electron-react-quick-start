@@ -81,15 +81,21 @@ class DocumentsList extends React.Component {
   }
 
   generateDocumentList() {
-    return this.state.documents.map((doc) => {
-          // The <p> tags should have Links around them!
-      var singleDoc = doc.data.doc;
-      return (<Link to="/textEditor" onClick={() => {
-        this.openDocumentClick(singleDoc);
-      }
-      }> <p style={styles.p}>{singleDoc.title}</p> </Link>);
+    console.log('MYDOCS', this.state.documents);
+    if (this.state.documents.length > 0) {
+      return this.state.documents.map((doc) => {
+        var singleDoc = doc.data.doc;
+        console.log('SINGLEDOC', singleDoc);
+        return (
+          <Link
+            to="/textEditor"
+            onClick={() => {this.openDocumentClick(singleDoc);}}>
+            <p style={styles.p}>{singleDoc.title}</p>
+          </Link>);
     });
-
+  } else {
+    return <p>You have no docs.</p>
+  }
   }
 
   generateColaborationList() {

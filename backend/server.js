@@ -46,7 +46,7 @@ io.on('connection', socket => {
   });
 
   socket.on('liveEdit', stringRaw => {
-
+    console.log('SERVER GOT THIS STRING', stringRaw);
     socket.broadcast.emit('broadcastEdit', stringRaw);
   });
 });
