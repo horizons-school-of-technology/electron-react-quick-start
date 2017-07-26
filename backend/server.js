@@ -90,9 +90,8 @@ app.get('/failureLogin', (req, res) => {
   res.send({success: false});
 });
 
-app.post('/docs', (req, res) => {
-  var userId = req.body.userId;
-  User.findById(userId)
+app.get('/docs', (req, res) => {
+  User.findOne({username: req.user.username})
   .then((user) => {
     res.json({user: user});
   })
@@ -104,18 +103,28 @@ app.post('/docs', (req, res) => {
 app.post('/createDoc', (req, res) => {
   var newDoc = new Doc({
     title: req.body.title,
-    author: req.body.userId,
+    author: req.user.username,
     password: req.body.password
   });
   newDoc.save((err, doc) => {
     if (err) {
       res.json({failure: err});
     }
-    User.findById(req.body.userId)
+
+    User.findOne({username: req.user.username})
     .then((user) => {
       user.docs.push({id: doc._id, isOwner: true});
+      user.save((err, user) => {
+        if(err) { res.json(err); }
+        res.json({
+          success: true,
+          docId: doc._id
+        });
+      });
     });
   });
+
+
 });
 
 
