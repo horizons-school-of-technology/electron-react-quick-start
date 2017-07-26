@@ -31,8 +31,13 @@ const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {editorState: EditorState.createEmpty()};
+    this.state = {
+      editorState: EditorState.createEmpty()
+    };
     this.onChange = (editorState) => this.setState({editorState});
+  }
+  componentDidMount() {
+
   }
   blockStyleFn(contentBlock) {
     const type = contentBlock.getType();

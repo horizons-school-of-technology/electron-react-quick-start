@@ -58,7 +58,7 @@ class DocumentsList extends React.Component {
       data: {
         title: this.props.userId,
         author: this.props.history.username,
-        password:
+        password: 'rip'
       }
     })
     .then((resp) => {

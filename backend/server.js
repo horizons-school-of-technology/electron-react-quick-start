@@ -66,7 +66,22 @@ app.post('/login',
     successFlash: "Login Successful!"
   })
 );
+app.post('/save', (req, res) => {
+  var docId = req.body.docId;
+  var version = req.body.version;
+  Doc.findById(docId)
+  .then((doc) => {
+    doc.versions.unshift(version)
+  })
+  .save((err) => {
+    if (err) {
+      res.json({failure: err});
+    } else {
+      res.json({success: true})
+    }
+  })
 
+})
 app.post('/register', (req, res) => {
   console.log("Hey!");
   var username = req.body.username;

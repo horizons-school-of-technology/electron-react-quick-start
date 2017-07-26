@@ -1,7 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-//import {Editor, EditorState} from 'draft-js';
 import { Link } from 'react-router-dom';
+import styles from '../styles/styles';
+import '../styles/container.scss';
+
 class Register extends React.Component {
   constructor(props) {
     super(props);
@@ -49,15 +51,19 @@ class Register extends React.Component {
       );
     }
     return(
-      <div>
+      <div className="alignCenter">
+        <div className="spacer50"></div>
         <form onSubmit={this.makeRegisterRequest}>
-          <h1>Register</h1>
-          <p>Username</p>
-          <input
-            type="text"
-            placeholder="Username"
-            value={this.state.username}
-            onChange={this.handleUsernameChange}></input>
+          <h1 className="h1NoMargin">Register</h1>
+          <div className="alignRow">
+            <span className="icon"><i className="fa fa-user-o" aria-hidden="true"></i></span>
+            <input
+              style={styles.inputBox}
+              type="text"
+              placeholder="Username"
+              value={this.state.username}
+              onChange={this.handleUsernameChange}></input>
+          </div>
             <p>Password</p>
             <input
               type="password"

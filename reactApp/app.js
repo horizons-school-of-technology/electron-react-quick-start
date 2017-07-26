@@ -2,10 +2,10 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 import App from './components/App';
-// import Login from './components/Login';
-// import Register from './components/Register';
-// import TextEditor from './components/TextEditor';
-// import DocumentsList from './components/DocumentsList';
+import Login from './components/Login';
+import Register from './components/Register';
+import TextEditor from './components/TextEditor';
+import DocumentsList from './components/DocumentsList';
 import { HashRouter as Router, hashHistory } from 'react-router-dom';
 
 
