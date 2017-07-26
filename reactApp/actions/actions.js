@@ -54,11 +54,15 @@ export function onCodeClick(e) {
 // ---------------------------DocumentPortal Actions----------------------------
 // -----------------------------------------------------------------------------
 
-function newDoc(userId, docName, docId) {
+export function renderDocs(userId) {
+
+}
+
+export function newDoc(docName, docId, isShared) {
   return {
     type: 'NEW_DOC',
     docName,
-    userId,
+    isShared,
     docId,
   };
 }
@@ -87,15 +91,15 @@ export function deleteDoc(userId, docId) {
   };
 }
 
-export function newDocThunk(userId, docName) {
-  return function(dispatch) {
-    const doc = new Document({
-      title: docName,
-      userOwnedId: userId,
-      collaborators: [userId]
-    });
-
-    return doc.save()
-              .then()
-  }
-}
+// export function newDocThunk(userId, docName) {
+//   return function(dispatch) {
+//     const doc = new Document({
+//       title: docName,
+//       userOwnedId: userId,
+//       collaborators: [userId]
+//     });
+//
+//     return doc.save()
+//               .then()
+//   }
+// }

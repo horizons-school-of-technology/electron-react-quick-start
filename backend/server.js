@@ -1,13 +1,14 @@
 const express = require('express');
 const app = express();
-const models = require('../models/models');
+const models = require('./models/models');
 const Document = models.Document;
 const User = models.User;
-
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-
+// import mongoose from 'mongoose';
+// import Promise from 'promise';
+// mongoose.Promise = Promise;
 // Example route
 app.get('/', function (req, res) {
   res.send('Hello World!');
@@ -37,25 +38,24 @@ app.post('/create', function(req, res) {
     userOwnedId: req.body.userId,
     collaborators: [req.body.userId]
   });
-
   // save the new doc to the db
-  doc.save()
-      .then((err, docSaved) => {
-        return docSaved._id;
-      })
-      // add the saved doc (id and name) to user who made it
-      .then((newDocId) => {
-        User.findById(req.body.userId)
-            .then((err, usr) => {
-              usr.documentsOwned = usr.documentsOwned.push({docName: req.body.docName, docId: newDocId});
-              usr.save();
-              return {docsOwned: usr.documentsOwned, docsShared: usr.documentsShared};
-            });
-        return;
-      })
-      .catch((err) => {
-        console.log('Error creating new document', err);
-      });
+  doc.save(function(err, docSaved) {
+    return docSaved._id;
+  })
+  // add the saved doc (id and name) to user who made it
+  .then((newDocId) => {
+    User.findById(req.body.userId, function(err, usr) {
+      usr.documents = usr.documents.push({docName: req.body.docName, docId: newDocId._id, isShared: false});
+      usr.save();
+      return res.send({docName: req.body.docName, docId: newDocId._id, isShared: false});
+    })
+    .catch((err) => {
+      console.log('Error finding user', err);
+    });
+  })
+  .catch((err) => {
+    console.log('Error creating new document', err);
+  });
 });
 
 app.post('/addShared', function(req, res){
@@ -84,6 +84,6 @@ app.post('save changes', function(req, res) {
   });
 });
 
-app.listen(3000, function () {
-  console.log('Backend server for Electron App running on port 3000!');
+app.listen(3005, function () {
+  console.log('Backend server for Electron App running on port 3005!');
 });
