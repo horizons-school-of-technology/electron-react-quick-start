@@ -1,5 +1,4 @@
 import React from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
 import Popover from 'material-ui/Popover';
 import { CirclePicker } from 'react-color';
 import IconButton from 'material-ui/IconButton';
