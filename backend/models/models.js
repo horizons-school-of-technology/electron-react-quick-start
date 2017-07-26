@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 // var connect = process.env.MONGODB_URI || require('./connect');
 mongoose.connect(process.env.MONGODB_URI);
 
-import {EditorState} from 'draft-js';
+// import {EditorState} from 'draft-js';
 
 const userSchema = mongoose.Schema({
-  user: {
+  username: {
     type: String,
     required: true
   },
@@ -41,7 +41,7 @@ const documentSchema = mongoose.Schema({
 });
 
 var User = mongoose.model('User', userSchema);
-var Document = mongoose.model('Follow', documentSchema);
+var Document = mongoose.model('Document', documentSchema);
 
 module.exports = {
   User: User,

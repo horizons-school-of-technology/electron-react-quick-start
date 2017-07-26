@@ -55,14 +55,14 @@ const tempStyles = {
 
 const onNewDocClick = (userId, docName) => {
   //send axios post request to local host 3000/create, use docId from mongo
-  axios.post('/create', {
+  axios.post('http://localhost:3005/create', {
     userId,
     docName,
   })
   .then((resp) => {
     console.log('this is resp', resp);
   });
-  //then: dispatch action onNewClick
+    //then: dispatch action onNewClick
 };
 
 const onSharedDocClick = (userId,  docId) => {
@@ -107,7 +107,7 @@ let DocumentPortal = ({userId}) => {
         </div>
       <input type="text" id="docName" placeholder="New Document Name" ></input>
       <button onClick={() => onNewDocClick(userId, document.getElementById('docName').value)}>Create</button><br></br>
-      <input type="text" id="docID" placeholder="Document ID"></input>
+      <input type="text" id="docId" placeholder="Document ID"></input>
       <button onClick={() => onSharedDocClick(userId, document.getElementById('docId').value)}>Add</button>
     </div>
   );
@@ -123,7 +123,7 @@ DocumentPortal.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    userId: state.userId
+    userId: '5978fa017d9f79e0ae6756f2'
   };
 };
 
