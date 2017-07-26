@@ -1,9 +1,3 @@
-import mongoose from 'mongoose';
-mongoose.connect('mongodb://Prateek:123@ds125623.mlab.com:25623/google-docs');
-
-const User = require('../../backend/models/models');
-
-
 export function onChangeAction(newEditorState) {
   return {
     type: 'CHANGED',
@@ -90,16 +84,3 @@ export function deleteDoc(userId, docId) {
     userId
   };
 }
-
-// export function newDocThunk(userId, docName) {
-//   return function(dispatch) {
-//     const doc = new Document({
-//       title: docName,
-//       userOwnedId: userId,
-//       collaborators: [userId]
-//     });
-//
-//     return doc.save()
-//               .then()
-//   }
-// }

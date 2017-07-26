@@ -3,12 +3,6 @@ const mongoose = require('mongoose');
 // var connect = process.env.MONGODB_URI || require('./connect');
 mongoose.connect(process.env.MONGODB_URI);
 
-<<<<<<< HEAD
-//import {EditorState} from 'draft-js';
-=======
-// import {EditorState} from 'draft-js';
->>>>>>> 2e43ae42f8dde463c6579f5f18fabaca51149696
-
 const userSchema = mongoose.Schema({
   username: {
     type: String,
@@ -22,7 +16,7 @@ const userSchema = mongoose.Schema({
   [
     {
       docName: String,
-      docId: String, 
+      docId: String,
       isShared: Boolean
     }
   ]
