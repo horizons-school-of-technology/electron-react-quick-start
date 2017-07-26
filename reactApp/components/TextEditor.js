@@ -31,8 +31,21 @@ const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
 class TextEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {editorState: EditorState.createEmpty()};
+    this.state = {
+        editorState: EditorState.createEmpty(),
+        message: '',
+        messages:[]
+    };
     this.onChange = (editorState) => this.setState({editorState});
+  }
+  componentDidMount(){
+    //   var socket = this.props.socket
+      this.socket = io.connect();
+    //   console.log('bitch look here', socket);
+      this.socket.on('testEmit2', value => {
+        this.setState({message: value.content})
+        // console.log('LN83', this.state.message.content);
+        })
   }
   blockStyleFn(contentBlock) {
     const type = contentBlock.getType();
@@ -222,7 +235,11 @@ class TextEditor extends React.Component {
           <div id="container">
               <Editor
                 style={styles.editor}
-                editorState={this.state.editorState} onChange={this.onChange}
+                editorState={this.state.editorState} onChange={(e) => {
+                    this.onChange();
+                    console.log("This is e", e)
+                    this.socket.emit('liveEdit', e.target.value)
+                }}
                 customStyleMap={styleMap} blockStyleFn={this.blockStyleFn}
                 blockRenderMap={extendedBlockRenderMap}
               />
