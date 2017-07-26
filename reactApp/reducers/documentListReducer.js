@@ -1,20 +1,20 @@
 const mongoose = require('mongoose');
 const {User, Document} = require('../../backend/models/models');
-mongoose.connect(/*TODO: MONGODB_URI*/);
+mongoose.connect(process.env.MONGODB_URI);
 
 const documentListReducer = (state = [], action) => {
   switch (action.type) {
 
     //TODO: call this when first logging in (think about re-rendering)
-  case 'RENDER_DOCUMENTS':
+  case 'RENDER_DOCUMENTS': {
     User.findById(action.userId)
         .then((userObj) => {
           return {docsOwned: userObj.documentsOwned, docsShared: userObj.documentsShared};
         });
-    break;
-
+        break;
+  }
     //TODO: check the flow for this. Should be called after clicking new doc btn
-  case 'NEW_DOC':
+  case 'NEW_DOC': {
     // Create new document
     const doc = new Document({
       title: action.docName,
@@ -41,9 +41,9 @@ const documentListReducer = (state = [], action) => {
           console.log('Error creating new document', err);
         });
     break;
-
+  }
     //TODO: add a shared doc to user and doc
-  case 'ADD_SHARED_DOC':
+  case 'ADD_SHARED_DOC': {
     // update the doc
     Document.findById(action.docId)
             .then((err, doc) => {
@@ -64,8 +64,10 @@ const documentListReducer = (state = [], action) => {
               console.log('Error creating new document', err);
             });
     break;
-  default:
+  }
+  default: {
     return state;
+  }
   }
 };
 
