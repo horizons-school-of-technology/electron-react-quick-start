@@ -63,7 +63,7 @@ passport.deserializeUser(function(id, done) {
 
 // passport strategy
 passport.use(new LocalStrategy(function(username, password, done) {
-    console.log("HERE");
+    console.log("LocalStrategy");
   // Find the user with the given username
   models.User.findOne({ username: username }, function (err, user) {
     // if there's an error, finish trying to authenticate (auth failed)
@@ -102,6 +102,17 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.send("Error:", err.message);
 });
+
+app.get('/findId', function(req, res){
+models.User.findOne({ username: req.data.username }, function (err, user) {
+    if (err){
+        throw Error(err)
+    } else {
+        var id = JSON.stringify(user._id)
+        res.json(id)
+    }
+    })
+})
 
 var port = process.env.PORT || 3005;
 app.listen(port);

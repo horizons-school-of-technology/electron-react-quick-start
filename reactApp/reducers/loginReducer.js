@@ -4,22 +4,25 @@ const loginReducer = (state = {'username': "", 'password': "", 'id':""}, action)
   switch (action.type) {
     case 'LOGIN':
     // get request to verify login
-    id = ""
-    console.log(state.username);
-    console.log(state.password);
+    var newId = ""
+    const newState = Object.assign(state);
+    // console.log(state.username);
+    // console.log(state.password);
         axios.post('http://localhost:3005/login', {
           password: state.password,
           username: state.username,
         })
-        // .then(function(response){
-        console.log(response)
-        id = JSON.stringify(response)
-        })
-        const newState = Object.assign(state);
+        .then(function(response){
+        console.log("1", response)
         newState.username = state.password
         newState.password = state.username
-        newState.id = id
-      return newState;
+        newState.id = response.data
+        console.log("newState ", newState);
+        })
+        .catch(function(err){
+            console.log("2 error: ", err);
+        })
+        return newState;
 
     case 'USERNAME':
           const newState2 = Object.assign(state);

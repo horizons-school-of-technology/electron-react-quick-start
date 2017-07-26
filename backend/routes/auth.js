@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models');
+var axios = require('axios')
 
 module.exports = function(passport) {
 
@@ -30,8 +31,10 @@ module.exports = function(passport) {
   // POST Login page
   router.post('/login', passport.authenticate('local'),function(req, res){
     // successFlash: 'Welcome!',
-    // failureFlash: 'Invalid username or password.'
-    res.json(Id)
+    // failureFlash: 'Invalid username or password.',
+    console.log(req.user._id);
+    // var newId = JSON.stringify(req.user._id)
+    res.json(req.user._id)
   });
 
   return router;
