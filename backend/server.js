@@ -52,6 +52,19 @@ io.on('connection', socket => {
   //   }
   //   socket.username = String(username);
 });
+
+socket.on('liveEdit', value => {
+    console.log('hi look its ln 74');
+    if (!socket.room) {
+      return socket.emit('errorMessage', 'No rooms joined!');
+    }
+    socket.to(socket.room).emit('testEmit2', {
+      username: socket.username,
+      content: value
+    });
+
+})
+
 // END SOCKET HANDLER --------------------------------------------------------
 
 app.get('/', (req, res) => {
