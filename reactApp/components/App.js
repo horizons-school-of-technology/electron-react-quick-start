@@ -1,5 +1,5 @@
 import React from 'react';
-import {  Route } from 'react-router-dom';
+import {  Route, Redirect } from 'react-router-dom';
 
 import Login from './Login';
 import Register from './Register';
@@ -11,11 +11,12 @@ class App extends React.Component {
   render() {
     return (
         <div>
-            <Route
+            <Redirect to="/login"/>
+            {/* <Route
               exact={true}
               path="/"
               component={Login}
-            />
+            /> */}
 
             <Route
               exact={true}
