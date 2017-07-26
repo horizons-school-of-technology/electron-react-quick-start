@@ -1,10 +1,11 @@
-import mongoose from 'mongoose';
-var connect = process.env.MONGODB_URI || require('./connect');
-mongoose.connect(connect);
+const mongoose = require('mongoose');
+// TODO: figure out who has the mongo
+// var connect = process.env.MONGODB_URI || require('./connect');
+mongoose.connect(process.env.MONGODB_URI);
 
 import {EditorState} from 'draft-js';
 
-var userSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
   user: {
     type: String,
     required: true
@@ -22,13 +23,14 @@ var userSchema = mongoose.Schema({
 });
 
 
-var documentSchema = mongoose.Schema({
+const documentSchema = mongoose.Schema({
   title: {
     type: String,
     required: true
   },
   editorState: {
-    type: EditorState
+    //TODO: figure out the editorstate type
+    type: Object
   },
   userOwnedId: {
     type: String,
