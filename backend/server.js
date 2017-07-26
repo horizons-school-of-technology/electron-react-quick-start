@@ -48,15 +48,12 @@ io.on('connection', socket => {
     console.log('NEW EVENT HAS BEEN EMITTED');
   });
 
-  socket.on('liveEdit', value => {
-    console.log('hi look its ln 74');
-    if (!socket.room) {
-      return socket.emit('errorMessage', 'No rooms joined!');
-    }
-    socket.to(socket.room).emit('testEmit2', {
-      username: socket.username,
-      content: value
-    });
+  socket.on('liveEdit', stringRaw => {
+    console.log('hi look its ln 52 from server', stringRaw);
+    // if (!socket.room) {
+    //   return socket.emit('errorMessage', 'No rooms joined!');
+    // }
+    socket.broadcast.emit('broadcastEdit', stringRaw);
   });
   // socket.on('username', username => {
   //   if (!username || !username.trim()) {

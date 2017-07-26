@@ -1,5 +1,5 @@
 import React from 'react';
-import {Editor, EditorState, RichUtils, DefaultDraftBlockRenderMap} from 'draft-js';
+import {Editor, EditorState, RichUtils, DefaultDraftBlockRenderMap, convertToRaw, convertFromRaw} from 'draft-js';
 
 import { Map } from 'immutable';
 import styles from '../styles/styles';
@@ -34,7 +34,7 @@ class TextEditor extends React.Component {
     this.state = {
       editorState: EditorState.createEmpty(),
       message: '',
-      messages:[]
+      messages:[] // put ln43 here
     };
     this.onChange = (editorState) => this.setState({editorState});
   }
@@ -42,11 +42,17 @@ class TextEditor extends React.Component {
     //   var socket = this.props.socket
     this.socket = io.connect('http://localhost:3000');
     //   console.log('bitch look here', socket);
-    this.socket.on('testEmit2', value => {
-      this.setState({message: value.content})
+    this.socket.on('broadcastEdit', stringRaw => {
+      console.log('STRING|RAW', stringRaw);
+      //const backFromRaw =  convertFromRaw(stringRaw);
+      const content = JSON.parse(stringRaw);
+      console.log("this is it", content);
+      this.setState({message: stringRaw.text});
         // console.log('LN83', this.state.message.content);
     });
   }
+
+
   blockStyleFn(contentBlock) {
     const type = contentBlock.getType();
     if (type === 'alignLeft') {
@@ -166,6 +172,8 @@ class TextEditor extends React.Component {
     ));
   }
   render() {
+    const raw = convertToRaw(this.state.editorState.getCurrentContent());
+    const stringRaw = JSON.stringify(raw);
     return (
       <div id="body">
         <div className="alignSB">
@@ -237,8 +245,9 @@ class TextEditor extends React.Component {
                 style={styles.editor}
                 editorState={this.state.editorState} onChange={(event) => {
                     this.onChange(event);
-                    console.log("EVENT", event)
-                    this.socket.emit('liveEdit', event);
+                    console.log("RAW", raw)
+                    console.log('STRINGRAW', stringRaw);
+                    this.socket.emit('liveEdit', stringRaw);
                 }}
                 customStyleMap={styleMap} blockStyleFn={this.blockStyleFn}
                 blockRenderMap={extendedBlockRenderMap}
@@ -246,10 +255,7 @@ class TextEditor extends React.Component {
           <script type="text/javascript"> var socket = io('localhost: 3000') socket.emit('newEvent')</script>
           </div>
         </div>
-        //put this part of the code in the render part.
-var raw = convertToRaw(this.state.editorState.getContent())
-//if you put the below code on the screen in the return section, it should show you what it looks like
-JSON.stringify(raw)
+
       </div>
     );
   }
