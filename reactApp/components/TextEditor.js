@@ -45,9 +45,9 @@ class TextEditor extends React.Component {
     this.socket.on('broadcastEdit', stringRaw => {
       console.log('STRING|RAW', stringRaw);
       //const backFromRaw =  convertFromRaw(stringRaw);
-      const content = JSON.parse(stringRaw);
+      const content = convertFromRaw(JSON.parse(stringRaw));
       console.log("this is it", content);
-      this.setState({message: stringRaw.text});
+      this.setState({editorState: EditorState.createWithContent(content)});
         // console.log('LN83', this.state.message.content);
     });
   }
