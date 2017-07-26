@@ -25,3 +25,17 @@ export function onStrikeClick(e) {
     type: 'STRIKETHROUGH'
   };
 }
+
+export function onUnderlineClick(e) {
+  e.preventDefault();
+  return {
+    type: 'UNDERLINE'
+  };
+}
+
+export function onCodeClick(e) {
+  e.preventDefault();
+  return {
+    type: 'CODE'
+  };
+}

@@ -10,6 +10,10 @@ const editorReducer = (state = EditorState.createEmpty(), action) => {
     return RichUtils.toggleInlineStyle(state, 'ITALIC');
   case 'STRIKETHROUGH':
     return RichUtils.toggleInlineStyle(state, 'STRIKETHROUGH');
+  case 'UNDERLINE':
+    return RichUtils.toggleInlineStyle(state, 'UNDERLINE');
+  case 'CODE':
+    return RichUtils.toggleInlineStyle(state, 'CODE');
   default:
     return state;
   }
