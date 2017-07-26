@@ -72,22 +72,6 @@ app.post('/login',
   })
 );
 
-app.post('/save', (req, res) => {
-  var docId = req.body.docId;
-  var version = req.body.version;
-  Doc.findById(docId)
-  .then((doc) => {
-    doc.versions.unshift(version)
-  })
-  .save((err) => {
-    if (err) {
-      res.json({failure: err});
-    } else {
-      res.json({success: true})
-    }
-  })
-})
-
 app.post('/register', (req, res) => {
   var username = req.body.username;
   var password = req.body.password;
@@ -176,6 +160,7 @@ app.post('/editor/saved', (req, res) => {
 });
 
 app.post('/save', (req, res) => {
+  console.log('THIS IS ME SAVING', docId, version);
   var docId = req.body.docId;
   var version = req.body.version;
   Doc.findById(docId)

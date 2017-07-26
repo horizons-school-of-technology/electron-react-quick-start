@@ -42,7 +42,7 @@ class TextEditor extends React.Component {
       thisDoc: this.props.history.currentDoc,
       socket: null
     };
-    this.onChange = (editorState) => this.setState({editorState});
+    this.onChange = this.onChange.bind(this);
     this.handleSaveDocument = this.handleSaveDocument.bind(this);
   }
 
@@ -61,7 +61,13 @@ class TextEditor extends React.Component {
       this.setState({editorState: EditorState.createWithContent(content)});
     });
   }
-
+  onChange(editorState) {
+    this.setState({editorState: editorState});
+    const raw = convertToRaw(this.state.editorState.getCurrentContent());
+    const stringRaw = JSON.stringify(raw);
+    this.state.socket.emit('liveEdit', stringRaw);
+    console.log('STRINGRAW FROM CLIENT', stringRaw);
+  }
   blockStyleFn(contentBlock) {
     const type = contentBlock.getType();
     if (type === 'alignLeft') {
@@ -198,16 +204,12 @@ class TextEditor extends React.Component {
         docId: this.state.docId
       }
     })
-    .then(resp => console.log(resp))
+    .then(resp => console.log('RESP FROM SAVE', resp))
     .catch(err => console.log("Save doc Err: ", err));
   }
 
 
   render() {
-
-    const raw = convertToRaw(this.state.editorState.getCurrentContent());
-    const stringRaw = JSON.stringify(raw);
-
     if(this.state.willRedirect) {
       return (
         <Redirect to='/docList'/>
@@ -288,12 +290,7 @@ class TextEditor extends React.Component {
           <div id="container">
               <Editor
                 style={styles.editor}
-                editorState={this.state.editorState} onChange={(event) => {
-                    this.state.socket.emit('liveEdit', stringRaw);
-                    this.onChange(event);
-                    console.log("RAW", raw)
-                    console.log('STRINGRAW', stringRaw);
-                }}
+                editorState={this.state.editorState} onChange={(event) => {this.onChange(event);}}
                 customStyleMap={styleMap} blockStyleFn={this.blockStyleFn}
                 blockRenderMap={extendedBlockRenderMap}
               />
