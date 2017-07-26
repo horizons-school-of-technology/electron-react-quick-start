@@ -30,7 +30,6 @@ app.post('/register', function(req, res){
 // -----------------------------------------------------------------------------
 // --------------------------DocumentPortal Routes------------------------------
 // -----------------------------------------------------------------------------
-
 app.post('/create', function(req, res) {
   // Create new document
   const doc = new Document({
@@ -48,30 +47,19 @@ app.post('/create', function(req, res) {
       .then((newDocId) => {
         User.findById(req.body.userId)
             .then((err, usr) => {
-              usr.documents = usr.documents.push({docName: req.body.docName, docId: newDocId, isShared: false});
+              usr.documentsOwned = usr.documentsOwned.push({docName: req.body.docName, docId: newDocId});
               usr.save();
-              return {docName: req.body.docName, docId: newDocId, isShared: false};
+              return {docsOwned: usr.documentsOwned, docsShared: usr.documentsShared};
             });
-        return "poopydoopy";
+        return;
       })
       .catch((err) => {
         console.log('Error creating new document', err);
       });
 });
 
-app.post('/addShared', function(req, res) {
-  // req.body has userId, docId
-  // TODO: update documents. Find by docId, add userId as collaborator.
-      // inside that, update user with {docName: doc.title, docId: docId, isShared: true}
-
-});
-
-app.post('/delete', function(req, res) {
-
-});
-
-app.get('/open/:docId', function(req, res) {
-
+app.post('/addShared', function(req, res){
+  // TODO: update document's collaborators, update user's sharedDoc list, re-render
 });
 
 // -----------------------------------------------------------------------------
