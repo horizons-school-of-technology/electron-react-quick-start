@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const User = require('./models/models').User;
 const Doc = require('./models/models').Doc;
-const server = require('http').Server(app);
+const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 app.use(bodyParser.json());
@@ -41,19 +41,14 @@ app.use(passport.session());
 // END PASSPORT HERE --------------------------------------------------------
 
 // SOCKET HANDLER ------------------------------------------------------------
+console.log("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 io.on('connection', socket => {
-  console.log('connected');
+  console.log('connectedddddddddddddddddddd');
   socket.on('newEvent', function() {
     console.log('NEW EVENT HAS BEEN EMITTED');
   });
-  // socket.on('username', username => {
-  //   if (!username || !username.trim()) {
-  //     return socket.emit('errorMessage', 'No username!');
-  //   }
-  //   socket.username = String(username);
-});
 
-socket.on('liveEdit', value => {
+  socket.on('liveEdit', value => {
     console.log('hi look its ln 74');
     if (!socket.room) {
       return socket.emit('errorMessage', 'No rooms joined!');
@@ -62,8 +57,15 @@ socket.on('liveEdit', value => {
       username: socket.username,
       content: value
     });
+  });
+  // socket.on('username', username => {
+  //   if (!username || !username.trim()) {
+  //     return socket.emit('errorMessage', 'No username!');
+  //   }
+  //   socket.username = String(username);
+});
 
-})
+
 
 // END SOCKET HANDLER --------------------------------------------------------
 

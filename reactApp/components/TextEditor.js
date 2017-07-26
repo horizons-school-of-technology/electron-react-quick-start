@@ -40,7 +40,7 @@ class TextEditor extends React.Component {
   }
   componentDidMount(){
     //   var socket = this.props.socket
-    this.socket = io.connect();
+    this.socket = io.connect('http://localhost:3000');
     //   console.log('bitch look here', socket);
     this.socket.on('testEmit2', value => {
       this.setState({message: value.content})
@@ -235,11 +235,10 @@ class TextEditor extends React.Component {
           <div id="container">
               <Editor
                 style={styles.editor}
-                editorState={this.state.editorState} onChange={(e) => {
-                    this.onChange();
-                    console.log("This is e", e)
-                    this.socket.emit('liveEdit', e);
-                    // somehow make this ths.props.
+                editorState={this.state.editorState} onChange={(event) => {
+                    this.onChange(event);
+                    console.log("EVENT", event)
+                    this.socket.emit('liveEdit', event);
                 }}
                 customStyleMap={styleMap} blockStyleFn={this.blockStyleFn}
                 blockRenderMap={extendedBlockRenderMap}
@@ -247,6 +246,10 @@ class TextEditor extends React.Component {
           <script type="text/javascript"> var socket = io('localhost: 3000') socket.emit('newEvent')</script>
           </div>
         </div>
+        //put this part of the code in the render part.
+var raw = convertToRaw(this.state.editorState.getContent())
+//if you put the below code on the screen in the return section, it should show you what it looks like
+JSON.stringify(raw)
       </div>
     );
   }
