@@ -34,6 +34,14 @@ app.post('/register', function(req, res){
 
 app.post('/create', function(req, res) {
   // Create new document
+  // const user = new User({
+  //   username: 'spike',
+  //   password: '1',
+  //   documents: []
+  // });
+  //
+  // user.save();
+
   const doc = new Document({
     title: req.body.docName,
     userOwnedId: req.body.userId,
@@ -46,7 +54,7 @@ app.post('/create', function(req, res) {
   // add the saved doc (id and name) to user who made it
   .then((newDocId) => {
     User.findById(req.body.userId, function(err, usr) {
-      usr.documents = usr.documents.push({docName: req.body.docName, docId: newDocId._id, isShared: false});
+      usr.documents.push({docName: req.body.docName, docId: newDocId._id, isShared: false});
       usr.save();
       return res.send({docName: req.body.docName, docId: newDocId._id, isShared: false});
     })
@@ -63,7 +71,14 @@ app.post('/addShared', function(req, res) {
   // req.body has userId, docId
   // TODO: update documents. Find by docId, add userId as collaborator.
       // inside that, update user with {docName: doc.title, docId: docId, isShared: true}
-
+  console.log('req.body', req.body);
+  Document.findById(req.body.docId, function(err, doc){
+    doc.collaborators.push(req.body.userId);
+    User.findById(req.body.userId, function(err, usr){
+      usr.documents.push({docName: doc.title, docId: req.body.docId, isShared: true});
+      return res.send({docName: doc.title, docId: req.body.docId, isShared: true});
+    });
+  });
 });
 
 app.post('/delete', function(req, res) {

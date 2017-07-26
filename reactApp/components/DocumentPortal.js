@@ -67,9 +67,21 @@ const onNewDocClick = (userId, docName, onNewClick) => {
     //then: dispatch action onNewClick
 };
 
-const onSharedDocClick = (userId,  docId) => {
+const onSharedDocClick = (userId,  docId, onNewSharedClick) => {
   //send axios post request to local host 3000/addShared
   //then: dispatch action onSharedClick
+  console.log('In onSharedDocClick');
+  axios.post('http://localhost:3005/addShared', {
+    docId,
+    userId,
+  })
+  .then((resp) => {
+    console.log('resp', resp);
+    // console.log('name',resp.data.docName,"id",resp.data.docId, 'user', userId);
+    // onNewClick(resp.
+    onNewSharedClick(resp.data.docName, resp.data.docId, resp.data.isShared);
+  });
+    //then: dispatch action onNewClick
 };
 
 const onDeleteDocClick = (userId, docId) => {
@@ -84,7 +96,7 @@ const onDocOpenClick = (userId, docId) => {
 
 
 
-let DocumentPortal = ({userId, onNewClick}) => {
+let DocumentPortal = ({userId, onNewClick, onNewSharedClick}) => {
   return (
     <div>
         <div>
@@ -110,14 +122,14 @@ let DocumentPortal = ({userId, onNewClick}) => {
       <input type="text" id="docName" placeholder="New Document Name" ></input>
       <button onClick={() => onNewDocClick(userId, document.getElementById('docName').value, onNewClick)}>Create</button><br></br>
       <input type="text" id="docId" placeholder="Document ID"></input>
-      <button onClick={() => onSharedDocClick(userId, document.getElementById('docId').value)}>Add</button>
+      <button onClick={() => onSharedDocClick(userId, document.getElementById('docId').value, onNewSharedClick)}>Add</button>
     </div>
   );
 };
 
 DocumentPortal.propTypes = {
   onNewDocClick: PropTypes.func,
-  onSharedClick: PropTypes.func,
+  onNewSharedClick: PropTypes.func,
   onDeleteClick: PropTypes.func,
   onOpenClick: PropTypes.func,
   userId: PropTypes.String
@@ -125,14 +137,14 @@ DocumentPortal.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    userId: '5978fa017d9f79e0ae6756f2'
+    userId: '59791638b114ad48db864b00'
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onNewClick: (userId, newDocName, docId) => dispatch(newDoc(userId, newDocName, docId)),
-    onSharedClick: (userId, docId) => dispatch(addSharedDoc(userId, docId)),
+    onNewSharedClick: (userId, newDocName, docId) => dispatch(addSharedDoc(userId, newDocName, docId)),
     onDeleteClick: (userId, docId) => dispatch(deleteDoc(userId, docId)),
     onOpenClick: (userId, docId) => dispatch(openDoc(userId, docId)),
   };
