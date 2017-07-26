@@ -100,8 +100,7 @@ app.use(function(req, res, next) {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.send("Error:
-   ", err.message);
+  res.send("Error:", err.message);
 });
 
 var port = process.env.PORT || 3005;

@@ -31,7 +31,7 @@ module.exports = function(passport) {
   router.post('/login', passport.authenticate('local'),function(req, res){
     // successFlash: 'Welcome!',
     // failureFlash: 'Invalid username or password.'
-    res.json('success')
+    res.json(Id)
   });
 
   return router;

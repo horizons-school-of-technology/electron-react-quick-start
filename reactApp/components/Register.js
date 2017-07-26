@@ -2,29 +2,34 @@ import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {regUsername, regPassword, verPassword, register} from '../actions/actions.js'
+import { Link} from 'react-router-dom';
 
 let Register = ({username, password, verPassword, updateUsername, updatePassword, updateVerPassword, onSubmit}) => {
   return (
-     <div>
-      <form method="POST" style={style()}>
-        <h3>Register</h3>
-        <div className="form-group">
-          <label>Username</label>
-          <input type="text" name="username" className="form-control" onChange={(e) => updateUsername(e.target.value)}></input>
-        </div>
-        <div className="form-group">
-          <label>Password</label>
-          <input type="password" name="password" className="form-control" onChange={(e) => {updatePassword(e.target.value)}}></input>
-        </div>
-        <div className="form-group">
-          <label>Verify Password</label>
-          <input type="password" name="passwordRepeat" className="form-control" onChange={(e) => updateVerPassword(e.target.value)}></input>
-        </div>
-        <div className="form-group">
-          <button className="btn btn-success" onClick={(e) => {e.preventDefault(); onSubmit();}}>Register</button>
-        </div>
-      </form>
-  </div>
+     < div > <form method="POST" style={style()}>
+    <h3>Register</h3>
+    <div className="form-group">
+        <label>Username</label>
+        <input type="text" name="username" className="form-control" onChange={(e) => updateUsername(e.target.value)}></input>
+    </div>
+    <div className="form-group">
+        <label>Password</label>
+        <input type="password" name="password" className="form-control" onChange={(e) => {
+            updatePassword(e.target.value);
+        }}></input>
+    </div>
+    <div className="form-group">
+        <label>Verify Password</label>
+        <input type="password" name="passwordRepeat" className="form-control" onChange={(e) => updateVerPassword(e.target.value)}></input>
+    </div>
+    <div className="form-group">
+        <button className="btn btn-success" onClick={(e) => {
+            e.preventDefault();
+            onSubmit();
+        }}>Register</button>
+        <Link to="/login">Login</Link>
+    </div>
+</form> < /div>
   );
 };
 

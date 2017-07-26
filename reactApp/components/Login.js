@@ -1,27 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {saveUsername, savePassword, login} from '../actions/actions.js'
+import {saveUsername, savePassword, login} from '../actions/actions.js';
+import { Link} from 'react-router-dom';
 
 let Login = ({username, updateUsername, password, updatePassword, onSubmit}) => {
   return (
-      <div>
-      <form method="POST" style={style()}>
-        <h3>Login</h3>
-        <div className="form-group">
-          <label>Username</label>
-          <input type="text" name="username" className="form-control" onChange={(e) => updateUsername(e.target.value)}></input>
-        </div>
-        <div className="form-group">
-          <label>Password</label>
-          <input type="password" name="password" className="form-control" onChange={(e) => {updatePassword(e.target.value)}}></input>
-        </div>
-        <div className="form-group">
-          <button className="btn btn-success" onClick={(e) => {e.preventDefault(); onSubmit();}}>Login</button>
-          <a className="btn btn-primary" href="/signup">Register</a>
-        </div>
-      </form>
-      </div>
+      < div > <form method="POST" style={style()}>
+    <h3>Login</h3>
+    <div className="form-group">
+        <label>Username</label>
+        <input type="text" name="username" className="form-control" onChange={(e) => updateUsername(e.target.value)}></input>
+    </div>
+    <div className="form-group">
+        <label>Password</label>
+        <input type="password" name="password" className="form-control" onChange={(e) => {
+          updatePassword(e.target.value);
+        }}></input>
+    </div>
+    <div className="form-group">
+        <button className="btn btn-success" onClick={(e) => {
+          e.preventDefault();
+          onSubmit();
+        }}>Login</button>
+        <Link to="/register">Register</Link>
+    </div>
+</form> < /div>
   );
 };
 
