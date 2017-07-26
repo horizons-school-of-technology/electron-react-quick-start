@@ -34,12 +34,14 @@ class TextEditor extends React.Component {
     super(props);
     this.state = {
       editorState: EditorState.createEmpty(),
+
       docTitle: this.props.history.currentDoc.title || this.props.history.newDocTitle,
       docAuthor: this.props.history.currentDoc.author || this.props.history.username,
       docId: this.props.history.currentDoc._id || this.props.history.newDocId,
       collaborators: this.props.history.currentDoc.collaborators,
       willRedirect: false,
       thisDoc: this.props.history.currentDoc
+
     };
     this.onChange = (editorState) => this.setState({editorState});
     this.handleSaveDocument = this.handleSaveDocument.bind(this);
@@ -53,6 +55,22 @@ class TextEditor extends React.Component {
       });
     }
   }
+
+  componentDidMount(){
+    //   var socket = this.props.socket
+    this.socket = io.connect('http://localhost:3000');
+    //   console.log('bitch look here', socket);
+    this.socket.on('broadcastEdit', stringRaw => {
+      console.log('STRING|RAW', stringRaw);
+      //const backFromRaw =  convertFromRaw(stringRaw);
+      const content = convertFromRaw(JSON.parse(stringRaw));
+      console.log("this is it", content);
+      this.setState({editorState: EditorState.createWithContent(content)});
+        // console.log('LN83', this.state.message.content);
+    });
+  }
+
+
 
   blockStyleFn(contentBlock) {
     const type = contentBlock.getType();
@@ -196,11 +214,16 @@ class TextEditor extends React.Component {
 
 
   render() {
+
+    const raw = convertToRaw(this.state.editorState.getCurrentContent());
+    const stringRaw = JSON.stringify(raw);
+
     if(this.state.willRedirect) {
       return (
         <Redirect to='/docList'/>
       );
     }
+
     return (
       <div id="body">
         <div className="alignSB">
@@ -275,13 +298,19 @@ class TextEditor extends React.Component {
           <div id="container">
               <Editor
                 style={styles.editor}
-                editorState={this.state.editorState} onChange={this.onChange}
+                editorState={this.state.editorState} onChange={(event) => {
+                    this.onChange(event);
+                    console.log("RAW", raw)
+                    console.log('STRINGRAW', stringRaw);
+                    this.socket.emit('liveEdit', stringRaw);
+                }}
                 customStyleMap={styleMap} blockStyleFn={this.blockStyleFn}
                 blockRenderMap={extendedBlockRenderMap}
               />
           <script type="text/javascript"> var socket = io('localhost: 3000') socket.emit('newEvent')</script>
           </div>
         </div>
+
       </div>
     );
   }

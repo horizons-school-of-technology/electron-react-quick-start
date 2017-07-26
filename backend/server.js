@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const User = require('./models/models').User;
 const Doc = require('./models/models').Doc;
-const server = require('http').Server(app);
+const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 app.use(bodyParser.json());
@@ -41,10 +41,19 @@ app.use(passport.session());
 // END PASSPORT HERE --------------------------------------------------------
 
 // SOCKET HANDLER ------------------------------------------------------------
+console.log("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 io.on('connection', socket => {
-  console.log('connected');
+  console.log('connectedddddddddddddddddddd');
   socket.on('newEvent', function() {
     console.log('NEW EVENT HAS BEEN EMITTED');
+  });
+
+  socket.on('liveEdit', stringRaw => {
+    console.log('hi look its ln 52 from server', stringRaw);
+    // if (!socket.room) {
+    //   return socket.emit('errorMessage', 'No rooms joined!');
+    // }
+    socket.broadcast.emit('broadcastEdit', stringRaw);
   });
   // socket.on('username', username => {
   //   if (!username || !username.trim()) {
@@ -52,10 +61,17 @@ io.on('connection', socket => {
   //   }
   //   socket.username = String(username);
 });
+
+
+
 // END SOCKET HANDLER --------------------------------------------------------
 
 app.get('/', (req, res) => {
   res.send('Hit the / route!');
+});
+
+app.get('/login', (req, res) => {
+  res.send('We good fham');
 });
 
 app.post('/login',
