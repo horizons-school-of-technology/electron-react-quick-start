@@ -14,9 +14,15 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  documents: {
-    type: Array
-  },
+  documents:
+  [
+    {
+      docName: String,
+      docId: String, 
+      isShared: Boolean
+    }
+  ]
+  ,
   //documents is array of objects with (docId, docName, isShared (whether it is a shared doc or not))
 });
 
