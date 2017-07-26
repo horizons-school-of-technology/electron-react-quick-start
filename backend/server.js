@@ -118,6 +118,8 @@ app.post('/createDoc', (req, res) => {
         if(err) { res.json(err); }
         res.json({
           success: true,
+          title: req.body.title,
+          author: req.user.username,
           docId: doc._id
         });
       });
@@ -127,12 +129,31 @@ app.post('/createDoc', (req, res) => {
 
 });
 
+// This route is for when we want to make a new doc
+app.post('/editor/new', (req, res) => {
+  // We need the  doc title, documentId and author
+  // var author = req.user.username;
+  // var documentId = req.body.docId;
+  // var docTitle = req.body.docTitle;
 
-app.post('/editor', (req, res) => {
+
+});
+
+// This route is for when we want to open a saved document
+app.post('/editor/saved', (req, res) => {
   var docId = req.body.docId;
-  Document.findOne({id: docId})
+  Doc.findById(docId)
   .then((doc) => {
-    res.json({doc: doc});
+    if(!doc) {
+      res.json({
+        success: false,
+        error: "MongoDB Error: The document could not be found!"
+      });
+    }
+    res.json({
+      success: true,
+      doc: doc
+    });
   });
 });
 
@@ -155,10 +176,7 @@ server.listen(3000, () => {
  * @return
  */
 const saveUserInMongoDB = (username, password) => {
-  new User({
-    username,
-    password
-  })
+  new User({username, password})
   .save((err) => {
     if(err) {
       console.log("Error creating new user: ", err);
