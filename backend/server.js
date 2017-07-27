@@ -8,9 +8,12 @@ var LocalStrategy = require('passport-local');
 var mongoose = require('mongoose');
 var connect = process.env.MONGODB_URI;
 const express = require('express');
+const models = require('./models/models');
 const Document = models.Document;
 const User = models.User;
 const bodyParser = require('body-parser');
+
+var REQUIRED_ENV = "SECRET MONGODB_URI".split(" ");
 
 REQUIRED_ENV.forEach(function(el) {
   if (!process.env[el]){
@@ -21,13 +24,9 @@ REQUIRED_ENV.forEach(function(el) {
 
 mongoose.connect(connect);
 
-var models = require('./models');
 var routes = require('./routes/routes');
 var auth = require('./routes/auth');
 var app = express();
-
-
-var REQUIRED_ENV = "SECRET MONGODB_URI".split(" ");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -175,11 +174,6 @@ app.post('save changes', function(req, res) {
   });
 });
 
-app.listen(3005, function () {
-  console.log('Backend server for Electron App running on port 3005!');
-
-});
-
 // error handlers
 // production error handler
 // no stacktraces leaked to user
@@ -193,6 +187,7 @@ app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
+});
 
 var port = process.env.PORT || 3005;
 app.listen(port, function() {

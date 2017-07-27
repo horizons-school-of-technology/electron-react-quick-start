@@ -1,7 +1,7 @@
 // Add Passport-related auth routes here.
 var express = require('express');
 var router = express.Router();
-var models = require('../models');
+var models = require('../models/models');
 var axios = require('axios')
 
 module.exports = function(passport) {
