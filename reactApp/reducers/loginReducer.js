@@ -18,11 +18,14 @@ const loginReducer = (state = {'username': "", 'password': "", 'id':""}, action)
         newState.password = state.username
         newState.id = response.data
         console.log("newState ", newState);
+        return newState;
         })
         .catch(function(err){
             console.log("2 error: ", err);
+            console.log("newState ", newState);
+            return newState;
         })
-        return newState;
+
 
     case 'USERNAME':
           const newState2 = Object.assign(state);
