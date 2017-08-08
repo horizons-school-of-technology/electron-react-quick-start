@@ -50,8 +50,8 @@ class Documents extends React.Component {
   // handlePassword(event) {
   //   this.setState({ password: event.target.value });
   // }
-  handleDocClick(e) {
-    e.preventDefault();
+  handleDocClick() {
+    console.log('I am clicking the document');
   }
   handleDocId(event) {
     this.setState({ documentId: event.target.value });
