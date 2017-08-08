@@ -1,5 +1,5 @@
 var React = require('react');
-import {Editor, EditorState, RichUtils, DefaultDraftBlockRenderMap} from 'draft-js';
+import {Editor, EditorState, RichUtils, DefaultDraftBlockRenderMap, Modifier} from 'draft-js';
 import Immutable from 'immutable';
 import Toolbar from './toolbar';
 
@@ -16,6 +16,32 @@ const blockRenderMap = Immutable.Map({
   }
 })
 const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
+
+// This object provides the styling information for our custom color
+// styles.
+const colorStyleMap = {
+  red: {
+    color: 'rgba(255, 0, 0, 1.0)',
+  },
+  orange: {
+    color: 'rgba(255, 127, 0, 1.0)',
+  },
+  yellow: {
+    color: 'rgba(180, 180, 0, 1.0)',
+  },
+  green: {
+    color: 'rgba(0, 180, 0, 1.0)',
+  },
+  blue: {
+    color: 'rgba(0, 0, 255, 1.0)',
+  },
+  indigo: {
+    color: 'rgba(75, 0, 130, 1.0)',
+  },
+  violet: {
+    color: 'rgba(127, 0, 255, 1.0)',
+  },
+};
 
 class MyEditor extends React.Component {
   constructor(props) {
@@ -64,11 +90,13 @@ class MyEditor extends React.Component {
             onChange={this.onChange}
             handleKeyCommand={this.handleKeyCommand}
             blockRenderMap={extendedBlockRenderMap}
+            customStyleMap={colorStyleMap}
           />
         </div>
       </div>
     );
   }
 }
+
 
 export default MyEditor;
