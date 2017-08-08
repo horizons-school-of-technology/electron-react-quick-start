@@ -1,6 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 import MyEditor from './editor.js';
+import AuthExample from './auth.js';
 
 
 /* This can check if your electron app can communicate with your backend */
@@ -12,5 +13,6 @@ import MyEditor from './editor.js';
 ReactDOM.render(<div>
   <p>see if this shows up</p>
   <MyEditor />
+  <AuthExample />
 </div>,
    document.getElementById('root'));
