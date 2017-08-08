@@ -1,7 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-import MyEditor from './editor.js';
-import AuthExample from './auth.js';
+import HomePage from './homepage.js';
 
 
 /* This can check if your electron app can communicate with your backend */
@@ -10,9 +9,7 @@ import AuthExample from './auth.js';
 // .then(text => console.log(text))
 // .catch(err => {throw err})
 
-ReactDOM.render(<div>
-  <p>see if this shows up</p>
-  <MyEditor />
-  <AuthExample />
-</div>,
+
+
+ReactDOM.render( <HomePage />,
    document.getElementById('root'));
