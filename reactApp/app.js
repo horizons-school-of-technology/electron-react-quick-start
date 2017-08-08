@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-import MyEditor from './editor.js';
+import HomePage from './homepage.js';
 
 
 /* This can check if your electron app can communicate with your backend */
@@ -9,8 +9,7 @@ import MyEditor from './editor.js';
 // .then(text => console.log(text))
 // .catch(err => {throw err})
 
-ReactDOM.render(<div>
-  <p>see if this shows up</p>
-  <MyEditor />
-</div>,
+
+
+ReactDOM.render( <HomePage />,
    document.getElementById('root'));
