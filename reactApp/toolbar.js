@@ -18,7 +18,7 @@ class Toolbar extends React.Component {
         <i onClick={() => this.props.onBlockStyleClick('unordered-list-item')} className="material-icons small">format_list_bulleted</i>
         <i onClick={() => this.props.onBlockStyleClick('ordered-list-item')} className="material-icons small">format_list_numbered</i>
       </div>
-    )
+    );
   }
 }
 
