@@ -11,10 +11,13 @@ class ColorDropdown extends React.Component {
   }
 
   render() {
+    var divStyle = {
+      display: 'inline-block'
+    }
     return (
-      <div>
-        <a className='dropdown-button btn' href='#' data-activates='dropdown1' onMouseDown={(e) => e.preventDefault()} >Font Color</a>
-          <ul id='dropdown1' className='dropdown-content'>
+      <div style={divStyle}>
+        <a className='dropdown-button btn' href='#' data-activates='dropdown2' onMouseDown={(e) => e.preventDefault()} >Font Color</a>
+          <ul id='dropdown2' className='dropdown-content'>
           {COLORS.map(colorObj =>
             <li key={colorObj.label}>
               <a href='#!' onMouseDown={(e) => this.onMouseDownHandler(e, colorObj.label)}>
@@ -29,7 +32,7 @@ class ColorDropdown extends React.Component {
   }
 }
 
-var COLORS = [
+const COLORS = [
        {label: 'red', style: 'red'},
        {label: 'orange', style: 'orange'},
        {label: 'yellow', style: 'yellow'},

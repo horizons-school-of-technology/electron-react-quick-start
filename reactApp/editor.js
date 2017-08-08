@@ -19,7 +19,7 @@ const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
 
 // This object provides the styling information for our custom color
 // styles.
-const colorStyleMap = {
+const customStyleMap = {
   red: {
     color: 'rgba(255, 0, 0, 1.0)',
   },
@@ -41,6 +41,15 @@ const colorStyleMap = {
   violet: {
     color: 'rgba(127, 0, 255, 1.0)',
   },
+  small: {
+    'fontSize': '50%'
+  },
+  medium: {
+    'fontSize': '100%'
+  },
+  large: {
+    'fontSize': '200%'
+  }
 };
 
 class MyEditor extends React.Component {
@@ -90,7 +99,7 @@ class MyEditor extends React.Component {
             onChange={this.onChange}
             handleKeyCommand={this.handleKeyCommand}
             blockRenderMap={extendedBlockRenderMap}
-            customStyleMap={colorStyleMap}
+            customStyleMap={customStyleMap}
           />
         </div>
       </div>
