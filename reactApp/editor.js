@@ -14,7 +14,7 @@ const blockRenderMap = Immutable.Map({
   'ALIGN_RIGHT': {
     wrapper: <div className='right' />
   }
-})
+});
 const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
 
 // This object provides the styling information for our custom color

@@ -23,7 +23,7 @@ class Toolbar extends React.Component {
         <ColorDropdown colorPick={this.props.onInlineStyleClick} />
 
       </div>
-    )
+    );
   }
 }
 
