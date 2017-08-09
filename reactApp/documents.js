@@ -133,7 +133,7 @@ class Documents extends React.Component {
             onChange={(event) => this.handleDocName(event)}
             value={this.state.documentName}
           />
-          {/* <input
+          {/* <input a small change
             type='text'
             placeholder='password'
             onChange={(event) => this.handlePassword(event)}
