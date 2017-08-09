@@ -85,7 +85,7 @@ class Documents extends React.Component {
   //---------------------------------------------------------------------------------------------------------
   joinDocument() {
     const formData = {
-      id: this.state.documentName,
+      id: this.state.documentId,
     };
     axios.post('http://localhost:3000/joindoc', formData, { headers: {'Accept': 'application/json'} })
       .then((response) => {
@@ -133,7 +133,7 @@ class Documents extends React.Component {
             onChange={(event) => this.handleDocName(event)}
             value={this.state.documentName}
           />
-          {/* <input
+          {/* <input a small change
             type='text'
             placeholder='password'
             onChange={(event) => this.handlePassword(event)}

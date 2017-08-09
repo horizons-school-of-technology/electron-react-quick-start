@@ -30,7 +30,6 @@ class SignUp extends React.Component {
   }
 
   handleSubmit() {
-    event.preventDefault();
     const formData = {
       username: this.state.username,
       password: this.state.password,

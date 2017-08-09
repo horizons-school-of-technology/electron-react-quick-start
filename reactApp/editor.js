@@ -137,7 +137,6 @@ class MyEditor extends React.Component {
     .then((resp) => {
       if(resp.data.success) {
         console.log('save success!');
-        this.setState({redirect: true});
       }
     });
   }
