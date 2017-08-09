@@ -1,6 +1,8 @@
 var React = require('react');
 var Promise = require('es6-promise').Promise;
 import axios from 'axios';
+import Editor from './editor.js';
+import { Route, BrowserRouter, Redirect } from 'react-router-dom';
 
 class Documents extends React.Component {
   constructor(props) {
@@ -12,6 +14,7 @@ class Documents extends React.Component {
       documentId: "",
       redirect: false,
       message: '',
+      stateId: '',
     };
   }
   componentWillMount() {
@@ -36,7 +39,7 @@ class Documents extends React.Component {
       }else{
         const array = [];
         documents.forEach((doc, index) => {
-          array.push(<li key={index} onClick={() => this.handleDocClick()}>{doc.name}</li>);
+          array.push(<li key={index} onClick={() => this.handleDocClick(doc._id)}>{doc.name}</li>);
         });
         this.setState({message: array});
         console.log(this.state.message);
@@ -50,8 +53,8 @@ class Documents extends React.Component {
   // handlePassword(event) {
   //   this.setState({ password: event.target.value });
   // }
-  handleDocClick() {
-    console.log('I am clicking the document');
+  handleDocClick(id) {
+    this.setState({redirect: true, stateId: id});
   }
   handleDocId(event) {
     this.setState({ documentId: event.target.value });
@@ -59,7 +62,6 @@ class Documents extends React.Component {
 
   //---------------------------------------------------------------------------------------------------------------------
   newDocument() {
-    event.preventDefault();
     const formData = {
       name: this.state.documentName,
       // password: this.state.password,
@@ -68,7 +70,7 @@ class Documents extends React.Component {
       .then((response) => {
         console.log('make doc', response);
         if(response.data.success === true){
-          this.setState({redirect: true});
+          this.setState({redirect: true, stateId: response.data.id});
           console.log('make a new doc success!');
         }
       }).catch((error) => {
@@ -77,15 +79,14 @@ class Documents extends React.Component {
   }
   //---------------------------------------------------------------------------------------------------------
   joinDocument() {
-    event.preventDefault();
     const formData = {
-      id: this.state.documentName,
+      id: this.state.documentId,
     };
     axios.post('http://localhost:3000/joindoc', formData, { headers: {'Accept': 'application/json'} })
       .then((response) => {
         console.log('join doc', response);
         if(response.data.success === true){
-          this.setState({redirect: true});
+          this.setState({redirect: true, stateId: this.state.documentId});
           console.log('Join a doc success!');
         }
       }).catch((error) => {
@@ -94,6 +95,17 @@ class Documents extends React.Component {
   }
   //=========================================================================================================================
   render(){
+    if(this.state.redirect){
+      var redirectString = '/editor/' + this.state.stateId;
+      return (
+        <BrowserRouter>
+          <div>
+            <Redirect to={redirectString} />
+            <Route path='/editor/:id' component={ Editor } />
+          </div>
+        </BrowserRouter>
+      );
+    }
 
     return(
       <div>

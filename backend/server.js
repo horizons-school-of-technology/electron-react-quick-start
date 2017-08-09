@@ -55,7 +55,6 @@ app.get('/', function (req, res) {
 });
 
 app.post('/login', passport.authenticate('local'), function(req, res){
-  console.log('User', req.user);
   if(req.user){
     res.json({success: true});
   }else{
@@ -95,15 +94,18 @@ app.post('/newdoc', function(req, res){
     var doc = new Document({
       name: req.body.name,
       owner: user,
+      content: "",
       contributors: [user],
     });
-    user.documents.push(doc);
-    user.save();
-    doc.save(function(err){
+    doc.save(function(err, d){
       if(!err){
         console.log("successfully saved document!");
-        res.json({success: true});
+        res.json({success: true, id: d._id});
+      }else{
+        return;
       }
+      user.documents.push(doc);
+      user.save();
     });
   });
 
@@ -118,6 +120,28 @@ app.post('/joindoc', function(req, res){
         user.documents.push(doc);
         user.save();
       });
+    }
+  });
+});
+
+app.post('/getdoc', function(req, res){
+  Document.findById(req.body.id)
+  .exec(function(err, doc){
+    if(!err) {
+      res.json({name: doc.name, id: doc._id, content: doc.content});
+    }else{
+      console.log(err);
+    }
+  });
+});
+
+app.post('/save', function(req, res){
+  Document.findByIdAndUpdate(req.body.id, {
+    $set: {content: req.body.content}
+  }, function(err){
+    if(!err) {
+      console.log('update document success!');
+      res.json({success: true});
     }
   });
 });

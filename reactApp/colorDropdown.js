@@ -13,7 +13,7 @@ class ColorDropdown extends React.Component {
   render() {
     var divStyle = {
       display: 'inline-block'
-    }
+    };
     return (
       <div style={divStyle}>
         <a className='dropdown-button btn' href='#' data-activates='dropdown2' onMouseDown={(e) => e.preventDefault()} >Font Color</a>
@@ -40,6 +40,6 @@ const COLORS = [
        {label: 'blue', style: 'blue'},
        {label: 'indigo', style: 'indigo'},
        {label: 'violet', style: 'violet'},
-     ];
+];
 
 export default ColorDropdown;
