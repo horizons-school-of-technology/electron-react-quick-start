@@ -86,7 +86,8 @@ class Documents extends React.Component {
       .then((response) => {
         console.log('join doc', response);
         if(response.data.success === true){
-          this.setState({redirect: true, stateId: this.state.documentId});
+          const id = this.state.documentId;
+          this.setState({redirect: true, stateId: id});
           console.log('Join a doc success!');
         }
       }).catch((error) => {
