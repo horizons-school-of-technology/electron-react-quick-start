@@ -1,9 +1,12 @@
 var React = require('react');
 var Promise = require('es6-promise').Promise;
 import axios from 'axios';
+<<<<<<< HEAD
+=======
 import Editor from './editor.js';
 import HomePage from './homepage.js';
 import { Route, BrowserRouter, Redirect } from 'react-router-dom';
+>>>>>>> hqiao97
 
 class Documents extends React.Component {
   constructor(props) {
@@ -37,7 +40,7 @@ class Documents extends React.Component {
       }else{
         const array = [];
         documents.forEach((doc, index) => {
-          array.push(<li key={index} onClick={() => this.handleDocClick(doc._id)}>{doc.name}</li>);
+          array.push(<li key={index} onClick={() => this.handleDocClick()}>{doc.name}</li>);
         });
         this.setState({message: array});
       }
@@ -50,8 +53,8 @@ class Documents extends React.Component {
   // handlePassword(event) {
   //   this.setState({ password: event.target.value });
   // }
-  handleDocClick(id) {
-    this.setState({redirect: true, stateId: id});
+  handleDocClick() {
+    console.log('I am clicking the document');
   }
   handleDocId(event) {
     this.setState({ documentId: event.target.value });
@@ -68,6 +71,7 @@ class Documents extends React.Component {
 
   //---------------------------------------------------------------------------------------------------------------------
   newDocument() {
+    event.preventDefault();
     const formData = {
       name: this.state.documentName,
       // password: this.state.password,
@@ -75,7 +79,7 @@ class Documents extends React.Component {
     axios.post('http://localhost:3000/newdoc', formData, { headers: {'Accept': 'application/json'} })
       .then((response) => {
         if(response.data.success === true){
-          this.setState({redirect: true, stateId: response.data.id});
+          this.setState({redirect: true});
           console.log('make a new doc success!');
         }
       }).catch((error) => {
@@ -84,8 +88,9 @@ class Documents extends React.Component {
   }
   //---------------------------------------------------------------------------------------------------------
   joinDocument() {
+    event.preventDefault();
     const formData = {
-      id: this.state.documentId,
+      id: this.state.documentName,
     };
     axios.post('http://localhost:3000/joindoc', formData, { headers: {'Accept': 'application/json'} })
       .then((response) => {

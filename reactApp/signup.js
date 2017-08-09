@@ -13,6 +13,7 @@ class SignUp extends React.Component {
     super(props);
     this.state = {
       redirect: false,
+      login: false,
       username: '',
       password: '',
     };
