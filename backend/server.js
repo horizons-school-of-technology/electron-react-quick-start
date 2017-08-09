@@ -7,6 +7,28 @@ const session = require('express-session');
 const Document = Models.Document;
 const crypto = require('crypto');
 
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+
+const path              = require('path');
+const compress          = require('compression');
+const webpack               = require('webpack');
+const webpackDevMiddleware  = require("webpack-dev-middleware");
+const webpackHotMiddleware  = require('webpack-hot-middleware');
+const config                = require('../webpack.config');
+
+const compiler = webpack(config);
+app.use(webpackDevMiddleware(compiler, {
+  noInfo: true,
+  publicPath: config.output.publicPath,
+  stats: {
+    colors: true
+  },
+  hot: true,
+  historyApiFallback: true
+}));
+app.use(webpackHotMiddleware(compiler));
+
 function hashPassword(password){
   var hash = crypto.createHash('sha256');
   hash.update(password);
@@ -49,9 +71,18 @@ passport.deserializeUser(function(id, done) {
 app.use(passport.initialize());
 app.use(passport.session());
 
+const publicPath = path.join(__dirname, 'public');
+app.use(express.static(publicPath));
+app.use(compress());
+
 // Example route
 app.get('/', function (req, res) {
-  res.send('Hello World!');
+  res.sendFile(path.join(publicPath, 'index.html'));
+});
+
+io.on('connection', socket => {
+  console.log('connected');
+
 });
 
 app.post('/login', passport.authenticate('local'), function(req, res){
@@ -129,7 +160,7 @@ app.post('/getdoc', function(req, res){
   Document.findById(req.body.id)
   .exec(function(err, doc){
     if(!err) {
-      res.json({name: doc.name, id: doc._id, content: doc.content});
+      res.json({name: doc.name, id: doc._id, content: doc.content, username: req.user.username});
     }else{
       console.log(err);
     }

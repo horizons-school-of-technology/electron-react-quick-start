@@ -65,6 +65,8 @@ class MyEditor extends React.Component {
       id: "",
       redirect: false,
       logout: false,
+      socket: io(),
+      username: "",
     };
     this.onChange = (editorState) => this.setState({editorState});
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
@@ -76,11 +78,15 @@ class MyEditor extends React.Component {
     const formData = {id: this.props.match.params.id};
     axios.post('http:localhost:3000/getdoc', formData, { headers: {'Accept': 'application/json'} })
     .then((resp) => {
-      this.setState({name: resp.data.name, id: resp.data.id});
+      this.setState({name: resp.data.name, id: resp.data.id, username: resp.data.username});
       if(resp.data.content !== "") {
         this.setState({editorState: resp.data.content});
       }
     });
+  }
+
+  componentDidMount(){
+
   }
 
   handleLogout() {
