@@ -117,6 +117,8 @@ app.post('/joindoc', function(req, res){
     if(!err) {
       User.findById(req.user.id)
       .exec(function(err, user){
+        console.log("*****USER DOCUMENTS******", user.documents)
+        console.log("*****DOC ID*****", doc._id)
         user.documents.push(doc);
         user.save();
         res.json({success: true});
