@@ -2,6 +2,7 @@ var React = require('react');
 var Promise = require('es6-promise').Promise;
 import axios from 'axios';
 import Editor from './editor.js';
+import HomePage from './homepage.js';
 import { Route, BrowserRouter, Redirect } from 'react-router-dom';
 
 class Documents extends React.Component {
@@ -15,24 +16,21 @@ class Documents extends React.Component {
       redirect: false,
       message: '',
       stateId: '',
+      logout: false,
     };
   }
   componentWillMount() {
     var promise = new Promise(function(resolve, reject) {
       axios.get('http:localhost:3000/documents')
       .then((resp) => {
-        console.log('get all the docs', resp);
         resolve(resp.data.documents);
       });
     });
 
     promise.then((result) => {
-      console.log(result);
       this.setState({documents: result});
 
       const { documents } = this.state;
-
-      console.log('documents length', documents.length, documents);
 
       if(documents.length === 0) {
         this.setState({message: 'you have no documents'});
@@ -42,7 +40,6 @@ class Documents extends React.Component {
           array.push(<li key={index} onClick={() => this.handleDocClick(doc._id)}>{doc.name}</li>);
         });
         this.setState({message: array});
-        console.log(this.state.message);
       }
     });
   }
@@ -59,6 +56,15 @@ class Documents extends React.Component {
   handleDocId(event) {
     this.setState({ documentId: event.target.value });
   }
+  handleLogout() {
+    axios.get('http:localhost:3000/logout')
+    .then((resp) => {
+      if(resp.data.success){
+        console.log('log out successfully');
+        this.setState({logout: true});
+      }
+    });
+  }
 
   //---------------------------------------------------------------------------------------------------------------------
   newDocument() {
@@ -68,7 +74,6 @@ class Documents extends React.Component {
     };
     axios.post('http://localhost:3000/newdoc', formData, { headers: {'Accept': 'application/json'} })
       .then((response) => {
-        console.log('make doc', response);
         if(response.data.success === true){
           this.setState({redirect: true, stateId: response.data.id});
           console.log('make a new doc success!');
@@ -84,7 +89,6 @@ class Documents extends React.Component {
     };
     axios.post('http://localhost:3000/joindoc', formData, { headers: {'Accept': 'application/json'} })
       .then((response) => {
-        console.log('join doc', response);
         if(response.data.success === true){
           const id = this.state.documentId;
           this.setState({redirect: true, stateId: id});
@@ -107,9 +111,20 @@ class Documents extends React.Component {
         </BrowserRouter>
       );
     }
+    if(this.state.logout){
+      return (
+        <BrowserRouter>
+          <div>
+            <Redirect to='/homepage' />
+            <Route path='/homepage' component={ HomePage } />
+          </div>
+        </BrowserRouter>
+      );
+    }
 
     return(
       <div>
+        <button onClick={() => this.handleLogout()}>Logout</button>
         <div>
           <h3>Create a new document: </h3>
           <input

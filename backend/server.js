@@ -147,6 +147,11 @@ app.post('/save', function(req, res){
   });
 });
 
+app.get('/logout', function(req, res){
+  req.logout();
+  console.log('logout success!');
+  res.json({success: true});
+});
 // app.get('/logout', function(req, res){
 //   req.logout();
 //   res.redirect('/');
