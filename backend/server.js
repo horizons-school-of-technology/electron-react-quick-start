@@ -117,8 +117,17 @@ app.post('/joindoc', function(req, res){
     if(!err) {
       User.findById(req.user.id)
       .exec(function(err, user){
-        user.documents.push(doc);
+        var docExists = false;
+        user.documents.forEach(function(docObj){
+          if(docObj._id.toString === doc._id.toString){
+            docExists = true
+          }
+        })
+        if(!docExists){
+          user.documents.push(doc);
+        }
         user.save();
+        res.json({success: true});
       });
     }
   });
@@ -146,6 +155,11 @@ app.post('/save', function(req, res){
   });
 });
 
+app.get('/logout', function(req, res){
+  req.logout();
+  console.log('logout success!');
+  res.json({success: true});
+});
 // app.get('/logout', function(req, res){
 //   req.logout();
 //   res.redirect('/');

@@ -14,7 +14,7 @@ var userSchema = new Schema({
 var documentSchema = new Schema({
   name: String,
   password: String,
-  content: String,
+  content: Object,
   owner: {
     type: Schema.ObjectId,
     ref: 'User',
