@@ -1,5 +1,5 @@
 var React = require('react');
-import {Editor, EditorState, RichUtils, DefaultDraftBlockRenderMap, Modifier} from 'draft-js';
+import {Editor, EditorState, RichUtils, DefaultDraftBlockRenderMap, Modifier, convertToRaw, convertFromRaw} from 'draft-js';
 import Immutable from 'immutable';
 import Toolbar from './toolbar';
 import axios from 'axios';
@@ -77,8 +77,9 @@ class MyEditor extends React.Component {
     axios.post('http:localhost:3000/getdoc', formData, { headers: {'Accept': 'application/json'} })
     .then((resp) => {
       this.setState({name: resp.data.name, id: resp.data.id});
+      console.log("*****resp.data.content*****", resp.data.content);
       if(resp.data.content !== "") {
-        this.setState({editorState: resp.data.content});
+        this.setState({editorState: EditorState.createWithContent(convertFromRaw(resp.data.content))});
       }
     });
   }
@@ -122,9 +123,11 @@ class MyEditor extends React.Component {
   }
 
   save() {
-    console.log(this.state.editorState.getCurrentContent());
-    const formData = {id: this.props.match.params.id, content: this.state.editorState};
-    axios.post('http:localhost:3000/getdoc', formData, { headers: {'Accept': 'application/json'} })
+    const contentState = this.state.editorState.getCurrentContent();
+    const RawContent = convertToRaw(contentState);
+    const formData = {id: this.props.match.params.id, content: RawContent};
+    console.log("***formData***", formData);
+    axios.post('http:localhost:3000/save', formData, { headers: {'Accept': 'application/json'} })
     .then((resp) => {
       if(resp.data.success) {
         console.log('save success!');
