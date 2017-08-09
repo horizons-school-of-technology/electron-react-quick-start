@@ -65,7 +65,7 @@ class MyEditor extends React.Component {
       id: "",
       redirect: false,
       logout: false,
-      socket: io(),
+      // socket: io(),
       username: "",
     };
     this.onChange = (editorState) => this.setState({editorState});
@@ -86,9 +86,9 @@ class MyEditor extends React.Component {
     });
   }
 
-  componentDidMount(){
-
-  }
+  // componentDidMount(){
+  //
+  // }
 
   handleLogout() {
     axios.get('http:localhost:3000/logout')

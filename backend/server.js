@@ -151,9 +151,9 @@ app.post('/joindoc', function(req, res){
         var docExists = false;
         user.documents.forEach(function(docObj){
           if(docObj._id.toString === doc._id.toString){
-            docExists = true
+            docExists = true;
           }
-        })
+        });
         if(!docExists){
           user.documents.push(doc);
         }
