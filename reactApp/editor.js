@@ -4,6 +4,7 @@ import Immutable from 'immutable';
 import Toolbar from './toolbar';
 import axios from 'axios';
 import Documents from './documents.js';
+import HomePage from './homepage.js';
 import { Route, BrowserRouter, Redirect } from 'react-router-dom';
 
 // text align
@@ -63,6 +64,7 @@ class MyEditor extends React.Component {
       name: "",
       id: "",
       redirect: false,
+      logout: false,
     };
     this.onChange = (editorState) => this.setState({editorState});
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
@@ -77,6 +79,16 @@ class MyEditor extends React.Component {
       this.setState({name: resp.data.name, id: resp.data.id});
       if(resp.data.content !== "") {
         this.setState({editorState: resp.data.content});
+      }
+    });
+  }
+
+  handleLogout() {
+    axios.get('http:localhost:3000/logout')
+    .then((resp) => {
+      if(resp.data.success){
+        console.log('log out successfully');
+        this.setState({logout: true});
       }
     });
   }
@@ -128,6 +140,17 @@ class MyEditor extends React.Component {
           <div>
             <Redirect to='/document'/>
             <Route path='/document' component={ Documents } />
+          </div>
+        </BrowserRouter>
+      );
+    }
+
+    if(this.state.logout){
+      return (
+        <BrowserRouter>
+          <div>
+            <Redirect to='/homepage' />
+            <Route path='/homepage' component={ HomePage } />
           </div>
         </BrowserRouter>
       );
