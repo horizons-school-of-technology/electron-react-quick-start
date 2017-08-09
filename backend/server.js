@@ -119,6 +119,7 @@ app.post('/joindoc', function(req, res){
       .exec(function(err, user){
         user.documents.push(doc);
         user.save();
+        res.json({success: true});
       });
     }
   });
