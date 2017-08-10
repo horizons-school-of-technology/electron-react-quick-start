@@ -11,6 +11,9 @@ class HomePage extends React.Component {
       login: false,
     };
   }
+  componentWillMount(){
+  }
+
   handleSignUp(e){
     e.preventDefault();
     this.setState({signup: true});

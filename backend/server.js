@@ -7,27 +7,11 @@ const session = require('express-session');
 const Document = Models.Document;
 const crypto = require('crypto');
 
-const server = require('http').Server(app);
+const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
-const path              = require('path');
-const compress          = require('compression');
-const webpack               = require('webpack');
-const webpackDevMiddleware  = require("webpack-dev-middleware");
-const webpackHotMiddleware  = require('webpack-hot-middleware');
-const config                = require('../webpack.config');
+const path = require('path');
 
-const compiler = webpack(config);
-app.use(webpackDevMiddleware(compiler, {
-  noInfo: true,
-  publicPath: config.output.publicPath,
-  stats: {
-    colors: true
-  },
-  hot: true,
-  historyApiFallback: true
-}));
-app.use(webpackHotMiddleware(compiler));
 
 function hashPassword(password){
   var hash = crypto.createHash('sha256');
@@ -71,18 +55,25 @@ passport.deserializeUser(function(id, done) {
 app.use(passport.initialize());
 app.use(passport.session());
 
-const publicPath = path.join(__dirname, 'public');
-app.use(express.static(publicPath));
-app.use(compress());
+// const publicPath = path.join(__dirname, 'build');
+// app.use(express.static(publicPath));
 
 // Example route
 app.get('/', function (req, res) {
-  res.sendFile(path.join(publicPath, 'index.html'));
+  res.send("hello world");
 });
 
-io.on('connection', socket => {
+io.on('connection', (socket) => {
   console.log('connected');
+  socket.on('joinRoom', function(roomID) {
+    socket.join(roomID);
+    console.log('a user joined the room')
+  });
 
+  socket.on('onChange', function({contentState, roomName}){
+    console.log("on change socket");
+    socket.to(roomName).emit("updateOnChange", {contentState: contentState});
+  })
 });
 
 app.post('/login', passport.authenticate('local'), function(req, res){
@@ -150,14 +141,14 @@ app.post('/joindoc', function(req, res){
       .exec(function(err, user){
         var docExists = false;
         user.documents.forEach(function(docObj){
-          if(docObj._id.toString === doc._id.toString){
+          if(docObj._id.toString() === doc._id.toString()){
             docExists = true;
           }
         });
         if(!docExists){
           user.documents.push(doc);
+          user.save();
         }
-        user.save();
         res.json({success: true});
       });
     }
@@ -196,6 +187,6 @@ app.get('/logout', function(req, res){
 //   res.redirect('/');
 // });
 
-app.listen(3000, function () {
+server.listen(3000, function () {
   console.log('Backend server for Electron App running on port 3000!');
 });

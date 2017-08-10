@@ -5,6 +5,7 @@ import Toolbar from './toolbar';
 import axios from 'axios';
 import Documents from './documents.js';
 import HomePage from './homepage.js';
+import io from 'socket.io-client';
 import { Route, BrowserRouter, Redirect } from 'react-router-dom';
 
 // text align
@@ -65,10 +66,27 @@ class MyEditor extends React.Component {
       id: "",
       redirect: false,
       logout: false,
-      // socket: io(),
+      socket: io('http://localhost:3000'),
       username: "",
     };
-    this.onChange = (editorState) => this.setState({editorState});
+    this.onChange = (editorState) => {
+      this.setState({editorState});
+      const contentState = this.state.editorState.getCurrentContent();
+      const RawContent = convertToRaw(contentState);
+      this.state.socket.emit('onChange', {
+        contentState: RawContent,
+        roomName: this.props.match.params.id
+      });
+
+    };
+
+    var self = this;
+    this.state.socket.on('updateOnChange', function({contentState}){
+      self.setState({
+        editorState: EditorState.createWithContent(convertFromRaw(contentState))
+      })
+    });
+
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
     this.onInlineStyleClick = this.onInlineStyleClick.bind(this);
     this.onBlockStyleClick = this.onBlockStyleClick.bind(this);
@@ -86,9 +104,9 @@ class MyEditor extends React.Component {
     });
   }
 
-  // componentDidMount(){
-  //
-  // }
+  componentDidMount(){
+    this.state.socket.emit('joinRoom', this.props.match.params.id);
+  }
 
   handleLogout() {
     axios.get('http:localhost:3000/logout')
