@@ -88,6 +88,12 @@ class MyEditor extends React.Component {
       'unordered-list-item'));
   }
 
+  _onOrderedClick(){
+    this.onChange(RichUtils.toggleBlockType(
+      this.state.editorState,
+      'ordered-list-item'));
+  }
+
   render() {
     return (
         <div>
@@ -132,7 +138,7 @@ class MyEditor extends React.Component {
                  <a className="waves-effect waves-teal btn-flat"><i className="material-icons">format_align_left</i></a>
                  <a className="waves-effect waves-teal btn-flat"><i className="material-icons">format_align_right</i></a>
                  <a className="waves-effect waves-teal btn-flat"><i className="material-icons" onClick={this._onBulletedClick.bind(this)}>format_list_bulleted</i></a>
-                 <a className="waves-effect waves-teal btn-flat"><i className="material-icons">format_list_numbered</i></a>
+                 <a className="waves-effect waves-teal btn-flat"><i className="material-icons" onClick={this._onOrderedClick.bind(this)}>format_list_numbered</i></a>
                  <a className="waves-effect waves-teal btn-flat" onClick={this._onStrikethroughClick.bind(this)}><i className="material-icons">format_strikethrough</i></a>
              </div>
          </div>
