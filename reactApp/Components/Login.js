@@ -18,7 +18,7 @@ class Login extends React.Component {
     .then((resp) => {
       if (resp.data.success) {
         console.log("success", resp.data.user);
-        this.props.history.push('/edit')
+        this.props.history.push('/docportal')
       } else {
         console.log("err", resp);
       }

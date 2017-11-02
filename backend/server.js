@@ -7,6 +7,7 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')(session);
 
 const User = require('./models').User;
+const Doc = require('./models').Doc;
 
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB_URI);
@@ -68,9 +69,54 @@ app.post('/login', passport.authenticate('local'), (req, res) => {
   res.json({ success: true, user: req.user });
 })
 
-app.get('/testUser', (req, res) => {
-  res.json({ user: req.user });
-})
+app.post('/newDoc', (req, res) => {
+  const newDoc = new Doc({
+    name: req.body.name,
+    owner: req.user._id
+  });
+
+  newDoc.save((err, result) => {
+    if (err) {
+      res.json({ success: false, error: err });
+    } else {
+      res.json({ success: true, doc: result });
+    }
+  });
+});
+
+app.get('/getmydocs', (req, res) => {
+  Doc.find({ owner: req.user._id }, (err, result) => {
+    if (err) {
+      res.json({ success: false, error: err });
+    } else {
+      res.json({ success: true, docs: result });
+    }
+  });
+});
+
+app.get('/getDoc/:docid', (req, res) => {
+  Doc.findById(req.params.docid, (err, result) => {
+    if (err) {
+      res.json({ success: false, error: err });
+    } else {
+      res.json({ success: true, doc: result });
+    }
+  });
+});
+
+app.post('/updateDoc/:docid', (req, res) => {
+  Doc.update({ _id: req.params.docid }, { $set: { content: req.body.content }}, (err, result) => {
+    if (err) {
+      res.json({ success: false, error: err });
+    } else {
+      res.json({ success: true, result: result });
+    }
+  });
+});
+
+// app.get('/testUser', (req, res) => {
+//   res.json({ user: req.user });
+// })
 
 app.listen(3000, function () {
   console.log('Backend server for Electron App running on port 3000!')

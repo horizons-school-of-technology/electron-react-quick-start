@@ -12,7 +12,24 @@ const User = mongoose.model('User', {
   },
 });
 
+const Doc = mongoose.model("Doc", {
+  name: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
+  content: {
+    default: '',
+    type: String
+  }
+});
 
 module.exports = {
-  User: User
+  User: User,
+  Doc: Doc
 };
