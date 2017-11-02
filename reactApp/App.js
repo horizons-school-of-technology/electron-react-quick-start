@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Route } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
-import Main from './Main';
+import MyEditor from './MyEditor';
 
 class App extends React.Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class App extends React.Component {
         <h1>Docs App</h1>
         <Route path='/' exact component={Register} />
         <Route path='/login' exact component={Login} />
-        <Route path='/main' exact component={Main} />
+        <Route path='/edit' component={MyEditor} />
       </div>
 
 
