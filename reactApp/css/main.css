@@ -2,6 +2,10 @@ h2 {
   color: blue;
 }
 
+h1 {
+  margin-left: 25px;
+}
+
 .toolbar {
   border-bottom: 2px solid orange;
   padding: 10px;
@@ -17,4 +21,9 @@ h2 {
 
 .right-align {
   text-align: right;
+}
+
+.register, .login {
+  margin: 0;
+  text-align: center;
 }

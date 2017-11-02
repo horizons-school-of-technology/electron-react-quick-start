@@ -5,16 +5,14 @@ import {
   RichUtils,
   DefaultDraftBlockRenderMap
 } from 'draft-js';
-
 import * as colors from 'material-ui/styles/colors';
-// import TextToolBox from './TextToolBox';
 import AppBar from 'material-ui/AppBar';
 import FontIcon from 'material-ui/FontIcon';
 import RaisedButton from 'material-ui/RaisedButton';
 import Popover from 'material-ui/Popover';
-
 import { CirclePicker } from 'react-color';
 import { Map } from 'immutable';
+
 const myBlockTypes = DefaultDraftBlockRenderMap.merge(new Map({
   center: {
     wrapper: <div className='center-align'/>
@@ -30,7 +28,6 @@ class MyEditor extends React.Component {
     this.state = {
       editorState: EditorState.createEmpty(),
       currentFontSize: 12,
-      DocID: 132132132132132,
       inlineStyles: {}
     };
     this.onChange = (editorState) => this.setState({editorState});
@@ -76,6 +73,7 @@ class MyEditor extends React.Component {
     })
   }
 
+  //toolbar
   toggleFormat(e, style, block) {
     e.preventDefault();
     if (block) {
@@ -90,6 +88,7 @@ class MyEditor extends React.Component {
       }
   }
 
+  //toolbar
   formatButton({icon, style, block}){
     return (
       <RaisedButton
@@ -104,6 +103,7 @@ class MyEditor extends React.Component {
     );
   }
 
+  //toolbar
   formatColor(color) {
     var newInlineStyles = Object.assign(
       {},
@@ -120,6 +120,7 @@ class MyEditor extends React.Component {
     })
   }
 
+  //toolbar
   applyIncreaseFontSize(shrink) {
     var newFontSize = this.state.currentFontSize + (shrink ? -4 : 4);
     var newInlineStyles = Object.assign(
@@ -138,6 +139,7 @@ class MyEditor extends React.Component {
     });
   }
 
+  //toolbar?
   increaseFontSize(shrink) {
     return (
       <RaisedButton

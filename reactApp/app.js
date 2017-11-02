@@ -1,6 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-import MyEditor from './components/MyEditor'
+import { HashRouter } from 'react-router-dom';
+import MamaApp from './components/MamaApp.js';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import injectTapEventPlugin from 'react-tap-event-plugin';
 //
@@ -9,10 +10,12 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 require('./css/main.css');
 
 ReactDOM.render(
-  <MuiThemeProvider>
-    <MyEditor />
-  </MuiThemeProvider>,
-  document.getElementById('root'));
+  <HashRouter>
+    {/* <MuiThemeProvider> */}
+      <MamaApp />
+    {/* </MuiThemeProvider> */}
+  </HashRouter>,
+    document.getElementById('root'));
 
 /* This can check if your electron app can communicate with your backend */
 // fetch('http://localhost:3000')

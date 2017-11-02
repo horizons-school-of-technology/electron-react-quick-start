@@ -35,14 +35,22 @@
     "webpack-dev-server": "^2.6.0"
   },
   "dependencies": {
+    "axios": "^0.17.0",
+    "body-parser": "^1.18.2",
+    "connect-mongo": "^2.0.0",
     "draft-js": "^0.10.4",
-    "draft.js": "^0.2.0",
     "express": "^4.15.3",
+    "express-session": "^1.15.6",
     "immutable": "^3.8.2",
     "material-ui": "^0.19.4",
+    "mongodb": "^2.2.33",
+    "mongoose": "^4.12.6",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "react": "^15.6.1",
-    "react-bootstrap": "^0.31.5",
     "react-color": "^2.13.8",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2"
   }
 }
