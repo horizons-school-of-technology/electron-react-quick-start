@@ -1,0 +1,16 @@
+.center-align{
+  text-align: center;
+}
+
+.right-align{
+  text-align: right;
+}
+
+.toolbar {
+  border-bottom: 2px solid gray;
+  padding: 10px;
+}
+
+.toolbar > * {
+  margin-right: 5px;
+}
