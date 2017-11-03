@@ -11,9 +11,9 @@ require('./css/main.css');
 
 ReactDOM.render(
   <HashRouter>
-    {/* <MuiThemeProvider> */}
+    <MuiThemeProvider>
       <MamaApp />
-    {/* </MuiThemeProvider> */}
+    </MuiThemeProvider>
   </HashRouter>,
     document.getElementById('root'));
 

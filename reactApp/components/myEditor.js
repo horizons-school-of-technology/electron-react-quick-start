@@ -3,14 +3,18 @@ import {
   Editor,
   EditorState,
   RichUtils,
-  DefaultDraftBlockRenderMap
+  DefaultDraftBlockRenderMap,
+  convertToRaw,
+  convertFromRaw
 } from 'draft-js';
+import { Link } from 'react-router-dom';
 import * as colors from 'material-ui/styles/colors';
 import AppBar from 'material-ui/AppBar';
 import FontIcon from 'material-ui/FontIcon';
 import RaisedButton from 'material-ui/RaisedButton';
 import Popover from 'material-ui/Popover';
 import { CirclePicker } from 'react-color';
+import axios from 'axios';
 import { Map } from 'immutable';
 
 const myBlockTypes = DefaultDraftBlockRenderMap.merge(new Map({
@@ -31,6 +35,41 @@ class MyEditor extends React.Component {
       inlineStyles: {}
     };
     this.onChange = (editorState) => this.setState({editorState});
+  }
+
+  componentDidMount() {
+    axios.get(`http://localhost:3000/getDoc/${this.props.match.params.docid}`)
+    .then((resp) => {
+      const doc = resp.data.doc;
+
+      if (doc.content === '') {
+        this.setState({
+          title: doc.name
+        });
+        return;
+      }
+
+      const rawContentState = JSON.parse(doc.content);
+      const contentState = convertFromRaw(rawContentState);
+      const newEditorState = EditorState.createWithContent(contentState);
+      this.setState({
+        title: doc.name,
+        editorState: newEditorState
+      })
+    })
+  }
+
+  saveDoc() {
+    const content = this.state.editorState.getCurrentContent();
+    const raw = convertToRaw(content);
+    const stringContent = JSON.stringify(raw);
+    console.log(stringContent);
+    axios.post(`http://localhost:3000/saveDoc/${this.props.match.params.docid}`, {
+      'content': stringContent
+    })
+    .then((resp) => {
+      console.log(resp.data);
+    })
   }
 
   openColorPicker(e) {
@@ -150,11 +189,22 @@ class MyEditor extends React.Component {
     );
   }
 
+  saveButton() {
+    return (
+      <RaisedButton
+        backgroundColor={colors.orange200}
+        onMouseDown={() => this.saveDoc()}
+        icon={<FontIcon className="material-icons">beenhere</FontIcon>}
+      />
+    );
+  }
+
   render() {
     return (
       <div>
-      <button> Back to Documents </button>
-      <AppBar title="Glaze Docs" />
+      <Link to="/userDocs"> Back to Documents </Link>
+      <h6 style={{marginLeft:'33vw',display:'inline-block'}}>Share this ID to Collab: {this.props.match.params.docid}</h6>
+      <AppBar title={this.state.title}/>
       <div className="toolbar">
         {this.formatButton({icon: 'format_bold', style: 'BOLD'})}
         {this.formatButton({icon: 'format_italic', style: 'ITALIC'})}
@@ -167,6 +217,7 @@ class MyEditor extends React.Component {
         {this.formatButton({icon: 'format_align_right', style: 'right', block: true})}
         {this.increaseFontSize(false)}
         {this.increaseFontSize(true)}
+        {this.saveButton()}
       </div>
       <br />
         <Editor

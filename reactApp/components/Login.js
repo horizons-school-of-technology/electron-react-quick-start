@@ -18,12 +18,12 @@ class Login extends React.Component {
       .then((resp) => {
         if (resp.data.success) {
           console.log("success", resp.data.user);
-          this.props.history.push('/main')
+          this.props.history.push('/userDocs')
         } else {
           console.log("err", resp);
         }
       })
-      .catch((err) => console.log(err))
+      .catch((error) => console.log(error))
     }
 
   render() {
