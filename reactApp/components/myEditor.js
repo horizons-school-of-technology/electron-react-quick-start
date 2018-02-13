@@ -214,7 +214,6 @@ class MyEditor extends React.Component {
         {this.formatButton({icon: 'format_align_left', style: 'unstyled', block: true})}
         {this.formatButton({icon: 'format_align_center', style: 'center', block: true})}
         {this.formatButton({icon: 'format_align_right', style: 'right', block: true})}
-        {this.formatButton({icon: 'format_align_right', style: 'right', block: true})}
         {this.increaseFontSize(false)}
         {this.increaseFontSize(true)}
         {this.saveButton()}

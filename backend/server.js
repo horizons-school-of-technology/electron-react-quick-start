@@ -1,10 +1,18 @@
-const express = require('express')
-const app = express()
-const bodyParser = require('body-parser');
+const app = require('express')();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+const bodyParser = require('body-parser')
+const webpack = require('webpack')
+const webpackDevMiddleware = require('webpack-dev-middleware')
+const webpackConfig = require('../webpack.config.js')
+// const indexFile = require('../build/index.dev.html')
+
+
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session);
+
 
 const User = require('./models').User;
 const Doc = require('./models').Doc;
@@ -48,8 +56,10 @@ passport.deserializeUser(function(id, done) {
 
 app.use(passport.initialize());
 app.use(passport.session());
+//End passport setup
 
 
+//* routes -- !Important! -- this first function sets up access control. i.e. what data types can post to your server* //
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:8080");
   res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
@@ -57,6 +67,17 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + indexFile);
+});
+
+// io.on('connection', function (socket) {
+//   socket.emit('news', { hello: 'world' });
+//   socket.on('my other event', function (data) {
+//     console.log(data);
+//   });
+// });
 
 app.post('/register', (req, res) => {
   const newUser = new User({
@@ -123,6 +144,7 @@ app.post('/saveDoc/:docid', (req, res) => {
   });
 });
 
+// * server listener set to localhost 3000 * //
 app.listen(3000, function () {
   console.log('Backend server for Electron App running on port 3000!')
 })

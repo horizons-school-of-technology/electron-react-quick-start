@@ -23,6 +23,9 @@ const Doc = mongoose.model('Doc', {
     ref: "User",
     required: true
   },
+  password: {
+    type: String
+  },
   content: {
     default: '',
     type: String
