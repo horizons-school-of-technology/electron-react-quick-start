@@ -1,0 +1,35 @@
+
+h1 {
+  margin-left: 25px;
+}
+
+.toolbar {
+  border-bottom: 2px solid orange;
+  padding: 10px;
+}
+
+.boxed {
+  display: block;
+  min-height: 25vh;
+  border: 1px solid black;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.toolbar > * {
+  margin-right: 5px;
+}
+
+.center-align {
+  text-align: center;
+}
+
+.right-align {
+  text-align: right;
+}
+
+.register, .login {
+  margin: 0;
+  text-align: center;
+}
